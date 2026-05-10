@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Escala Médica — Jun–Set 2026</title>
+<style>
+:root{--bg:#0f1923;--bg2:#16202e;--bg3:#1e2d3d;--bg4:#253447;--card:#1a2636;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--accent:#3b82f6;--accent2:#60a5fa;--text:#e8f0fe;--text2:#8fa8c8;--text3:#4a6080;--mono:'Courier New',monospace;--fer-t:#86efac;--fer-bg:rgba(134,239,172,0.08)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+body.light{--bg:#F5F3EF;--bg2:#EAE7E1;--bg3:#DEDAD3;--bg4:#CEC9C0;--card:#FDFCFA;--border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.13);--accent:#2563EB;--accent2:#1D4ED8;--text:#1A1A1A;--text2:#4A5060;--text3:#8A909E;--fer-t:#15803d;--fer-bg:#dcfce7}
+.hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:9px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.hdr h1{font-size:.92rem;font-weight:700;color:var(--text)}
+.hdr p{font-size:.65rem;color:var(--text2);margin-top:1px}
+.hdr-right{display:flex;align-items:center;gap:7px}
+.tbtn{width:28px;height:28px;background:var(--bg3);border:1px solid var(--border2);border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.8rem;user-select:none}
+.tabs{background:var(--bg2);border-bottom:2px solid var(--accent);padding:0 18px;display:flex;gap:2px;flex-shrink:0;overflow-x:auto}
+.tab{padding:7px 14px;cursor:pointer;font-size:.76rem;font-weight:600;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .18s;white-space:nowrap}
+.tab:hover{color:var(--text2)}.tab.on{color:var(--accent2);border-bottom-color:var(--accent)}
+.main{flex:1;display:flex;min-height:500px}
+.left{flex:1;overflow-y:auto;padding:12px 14px;min-width:0;max-height:82vh}
+.left::-webkit-scrollbar{width:4px}.left::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+.rght{width:210px;flex-shrink:0;border-left:1px solid var(--border);overflow-y:auto;padding:10px;max-height:82vh}
+.rght::-webkit-scrollbar{width:3px}.rght::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
+.leg{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
+.lc{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:10px;font-size:.59rem;font-weight:600}
+.ld{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.ferias-bar{display:flex;align-items:center;gap:6px;margin-bottom:10px;padding:6px 10px;background:rgba(134,239,172,0.08);border:1px solid rgba(134,239,172,0.2);border-radius:8px;font-size:.68rem;color:var(--fer-t);flex-wrap:wrap}
+.ferias-chip{background:rgba(134,239,172,0.15);border-radius:6px;padding:2px 8px;font-weight:700}
+.wblock{margin-bottom:16px}
+.wtitle{font-size:.68rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.stbl{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border-radius:10px;overflow:hidden;font-size:.68rem}
+.stbl th,.stbl td{border-right:1px solid var(--border);border-bottom:1px solid var(--border);text-align:center;padding:0}
+.stbl th:last-child,.stbl td:last-child{border-right:none}
+.stbl tr:last-child td{border-bottom:none}
+.rh th{background:var(--bg2);color:var(--text3);font-size:.6rem;font-weight:700;padding:5px 3px;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+.rh th.dc{text-align:left;padding-left:8px;color:var(--text2)}
+.dayc{background:var(--bg2);font-weight:700;font-size:.66rem;color:var(--text2);padding:5px 6px;text-align:left;min-width:52px;white-space:nowrap;line-height:1.2}
+.dayname{display:block;font-weight:700;font-size:.66rem;color:var(--text2)}
+.daydt{display:block;font-size:.58rem;color:var(--text3);font-weight:400;font-family:var(--mono)}
+.dayc.sab .dayname{color:var(--text3)}
+.dayc.sab{color:var(--text3)}
+.fc:hover{filter:brightness(.88)}
+.fclbl{font-size:.6rem;font-weight:700;letter-spacing:.1px;line-height:1.2}
+.fcname{font-size:.52rem;opacity:.7;margin-top:1px;line-height:1}
+.stitle{font-size:.7rem;font-weight:700;color:var(--text);margin-bottom:9px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.pcard{background:var(--bg3);border:1px solid var(--border2);border-radius:7px;padding:7px 9px;margin-bottom:7px}
+.pname{font-size:.72rem;font-weight:700;color:var(--text);margin-bottom:5px}
+.prow{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
+.plbl{font-size:.58rem;color:var(--text3)}
+.pval{font-size:.62rem;font-weight:700;font-family:var(--mono)}
+.an-sec{margin-bottom:13px}
+.an-title{font-size:.67rem;font-weight:700;color:var(--text2);margin-bottom:5px}
+.rrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
+.rfunc{font-size:.6rem;color:var(--text2);min-width:65px}
+.rbar-w{flex:1;height:4px;background:var(--bg4);border-radius:2px;margin:0 7px}
+.rbar{height:100%;border-radius:2px}
+.rval{font-size:.6rem;font-weight:700;font-family:var(--mono);min-width:12px;text-align:right}
+.has-swap{outline:2px solid rgba(245,158,11,.65);outline-offset:-1px}
+.has-realoc{outline:2px solid rgba(239,68,68,.6);outline-offset:-1px}
+.sdot{position:absolute;top:2px;right:2px;width:6px;height:6px;border-radius:50%;background:#f59e0b}
+.ralert{position:absolute;top:1px;left:2px;font-size:.55rem;line-height:1;pointer-events:none}
+.fc{padding:5px 2px;cursor:default;transition:filter .1s;min-width:75px;position:relative}
+.tt{display:none;position:absolute;z-index:9999;bottom:110%;left:50%;transform:translateX(-50%);background:#1e2d3d;color:#e8f0fe;font-size:.66rem;border:1px solid rgba(255,255,255,.15);border-radius:7px;padding:5px 9px;max-width:200px;box-shadow:0 4px 12px rgba(0,0,0,.4);pointer-events:none;white-space:normal;width:max-content}
+.fc:hover .tt{display:block}
+.dayc.dom .dayname{color:var(--text3);opacity:.65}
+.dayc.dom .daydt{opacity:.45}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div>
+    <h1>⚕️ Escala Residência Otorrino — Jun · Jul · Ago · Set 2026</h1>
+    <p>9 médicos · 4 semanas · Seg–Sáb · 1 médico de férias por quinzena · Distribuição matematicamente otimizada</p>
+  </div>
+  <div class="hdr-right">
+    <div class="tbtn" id="tbtn" onclick="toggleTheme()">🌙</div>
+  </div>
+</div>
+<div class="tabs">
+  <div class="tab on" onclick="show('Junho')">Junho</div>
+  <div class="tab" onclick="show('Julho')">Julho</div>
+  <div class="tab" onclick="show('Agosto')">Agosto</div>
+  <div class="tab" onclick="show('Setembro')">Setembro</div>
+  <div class="tab" onclick="show('trocas')">🔄 Trocas</div>
+  <div class="tab" onclick="show('realoc')">📋 Realocações</div><div class="tab" onclick="show('pessoal')">👤 Meu Calendário</div><div class="tab" onclick="show('visao')">📊 Visão Geral</div><div class="tab" onclick="show('analise')" style="margin-left:auto;color:var(--accent2)">📈 Análise Q3</div>
+</div>
+<div class="main">
+  <div class="left" id="left"></div>
+  <div class="rght" id="rght"></div>
+</div><div id="panel-realoc" style="display:none;overflow-y:auto;padding:12px 14px;flex-direction:column;gap:12px"></div>
+  <div id="panel-trocas" style="display:none;flex:1;padding:14px 16px;gap:14px;max-height:85vh;overflow-y:auto"></div><div id="panel-pessoal" style="display:none;flex:1;flex-direction:column;padding:14px 16px;max-height:85vh;overflow-y:auto"></div><div id="panel-visao" style="display:none;flex:1;flex-direction:column;padding:14px 16px;gap:14px;max-height:85vh;overflow-y:auto"></div>
+<script>
+function shortName(n){return n==="VICTORIA A"?"VIC.A":n==="VICTORIA V"?"VIC.V":n.split(" ")[0];}
+const ALL = ["ALEX", "ANDREZA", "CAMILA", "FLÁVIA", "MARIANA", "RAINÁ", "STEPHANIE", "VICTORIA A", "VICTORIA V"];
+const S = {"Junho": [{"day": "Seg", "week": 1, "weekday": "Seg", "ferias": "FLÁVIA", "ALEX": "CC1", "ANDREZA": "COB1", "CAMILA": "CC1", "MARIANA": "ARIC/OFF", "RAINÁ": "ANDY/CC", "STEPHANIE": "OFF2", "VICTORIA A": "OFF/HM/CIND", "VICTORIA V": "OFF1", "FLÁVIA": "FÉRIAS"}, {"day": "Ter", "week": 1, "weekday": "Ter", "ferias": "FLÁVIA", "ALEX": "OTONEURO", "ANDREZA": "COB2", "CAMILA": "OFF2", "MARIANA": "ARIC 1/2$", "RAINÁ": "OFF2", "STEPHANIE": "HM/HM/CIND", "VICTORIA A": "CC2", "VICTORIA V": "ANDY", "FLÁVIA": "FÉRIAS"}, {"day": "Qua", "week": 1, "weekday": "Qua", "ferias": "FLÁVIA", "ALEX": "OFF2", "ANDREZA": "CC3", "CAMILA": "OFF/HM/CIND", "MARIANA": "COB2", "RAINÁ": "OTONEURO", "STEPHANIE": "CC3", "VICTORIA A": "ANDY/CC", "VICTORIA V": "ARIC 1/2$", "FLÁVIA": "FÉRIAS"}, {"day": "Qui", "week": 1, "weekday": "Qui", "ferias": "FLÁVIA", "ALEX": "CC4", "ANDREZA": "OFF/HM/CIND", "CAMILA": "OTONEURO", "MARIANA": "CC4", "RAINÁ": "ANDY", "STEPHANIE": "ARIC $", "VICTORIA A": "OFF2", "VICTORIA V": "COB2", "FLÁVIA": "FÉRIAS"}, {"day": "Sex", "week": 1, "weekday": "Sex", "ferias": "FLÁVIA", "ALEX": "HM/PO", "ANDREZA": "ARIC $", "CAMILA": "CC5", "MARIANA": "COB1", "RAINÁ": "HM/HM/CIND", "STEPHANIE": "OFF1", "VICTORIA A": "OTONEURO", "VICTORIA V": "CC5", "FLÁVIA": "FÉRIAS"}, {"day": "Sáb", "week": 1, "weekday": "Sáb", "ferias": "FLÁVIA", "ALEX": "MUTIRÃO", "ANDREZA": "MUTIRÃO", "CAMILA": "UND. EXT.", "MARIANA": "UND. EXT.", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA", "FLÁVIA": "FÉRIAS"}, {"day": "Dom", "week": 1, "weekday": "Dom", "ferias": "FLÁVIA", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FÉRIAS", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA"}, {"day": "Seg", "week": 2, "weekday": "Seg", "ferias": "MARIANA", "ALEX": "OFF1", "ANDREZA": "CC1", "CAMILA": "COB1", "FLÁVIA": "CC1", "RAINÁ": "ARIC/OFF", "STEPHANIE": "ANDY/CC", "VICTORIA A": "OFF2", "VICTORIA V": "OFF/HM/CIND", "MARIANA": "FÉRIAS"}, {"day": "Ter", "week": 2, "weekday": "Ter", "ferias": "MARIANA", "ALEX": "ANDY", "ANDREZA": "OTONEURO", "CAMILA": "COB2", "FLÁVIA": "OFF2", "RAINÁ": "ARIC 1/2$", "STEPHANIE": "OFF2", "VICTORIA A": "HM/HM/CIND", "VICTORIA V": "CC2", "MARIANA": "FÉRIAS"}, {"day": "Qua", "week": 2, "weekday": "Qua", "ferias": "MARIANA", "ALEX": "ARIC 1/2$", "ANDREZA": "OFF2", "CAMILA": "CC3", "FLÁVIA": "OFF/HM/CIND", "RAINÁ": "COB2", "STEPHANIE": "OTONEURO", "VICTORIA A": "CC3", "VICTORIA V": "ANDY/CC", "MARIANA": "FÉRIAS"}, {"day": "Qui", "week": 2, "weekday": "Qui", "ferias": "MARIANA", "ALEX": "COB2", "ANDREZA": "CC4", "CAMILA": "OFF/HM/CIND", "FLÁVIA": "OTONEURO", "RAINÁ": "CC4", "STEPHANIE": "ANDY", "VICTORIA A": "ARIC $", "VICTORIA V": "OFF2", "MARIANA": "FÉRIAS"}, {"day": "Sex", "week": 2, "weekday": "Sex", "ferias": "MARIANA", "ALEX": "CC5", "ANDREZA": "HM/PO", "CAMILA": "ARIC $", "FLÁVIA": "CC5", "RAINÁ": "COB1", "STEPHANIE": "HM/HM/CIND", "VICTORIA A": "OFF1", "VICTORIA V": "OTONEURO", "MARIANA": "FÉRIAS"}, {"day": "Sáb", "week": 2, "weekday": "Sáb", "ferias": "MARIANA", "CAMILA": "MUTIRÃO", "FLÁVIA": "MUTIRÃO", "ALEX": "UND. EXT.", "ANDREZA": "UND. EXT.", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA", "MARIANA": "FÉRIAS"}, {"day": "Dom", "week": 2, "weekday": "Dom", "ferias": "MARIANA", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FÉRIAS", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA"}, {"day": "Seg", "week": 3, "weekday": "Seg", "ferias": "MARIANA", "ALEX": "OFF/HM/CIND", "ANDREZA": "OFF1", "CAMILA": "CC1", "FLÁVIA": "COB1", "RAINÁ": "CC1", "STEPHANIE": "ARIC/OFF", "VICTORIA A": "ANDY/CC", "VICTORIA V": "OFF2", "MARIANA": "FÉRIAS"}, {"day": "Ter", "week": 3, "weekday": "Ter", "ferias": "MARIANA", "ALEX": "CC2", "ANDREZA": "ANDY", "CAMILA": "OTONEURO", "FLÁVIA": "COB2", "RAINÁ": "OFF2", "STEPHANIE": "ARIC 1/2$", "VICTORIA A": "OFF2", "VICTORIA V": "HM/HM/CIND", "MARIANA": "FÉRIAS"}, {"day": "Qua", "week": 3, "weekday": "Qua", "ferias": "MARIANA", "ALEX": "ANDY/CC", "ANDREZA": "ARIC 1/2$", "CAMILA": "OFF2", "FLÁVIA": "CC3", "RAINÁ": "OFF/HM/CIND", "STEPHANIE": "COB2", "VICTORIA A": "OTONEURO", "VICTORIA V": "CC3", "MARIANA": "FÉRIAS"}, {"day": "Qui", "week": 3, "weekday": "Qui", "ferias": "MARIANA", "ALEX": "OFF2", "ANDREZA": "COB2", "CAMILA": "CC4", "FLÁVIA": "OFF/HM/CIND", "RAINÁ": "OTONEURO", "STEPHANIE": "CC4", "VICTORIA A": "ANDY", "VICTORIA V": "ARIC $", "MARIANA": "FÉRIAS"}, {"day": "Sex", "week": 3, "weekday": "Sex", "ferias": "MARIANA", "ALEX": "OTONEURO", "ANDREZA": "CC5", "CAMILA": "HM/PO", "FLÁVIA": "ARIC $", "RAINÁ": "CC5", "STEPHANIE": "HM/HM/CIND", "VICTORIA A": "COB1", "VICTORIA V": "OFF1", "MARIANA": "FÉRIAS"}, {"day": "Sáb", "week": 3, "weekday": "Sáb", "ferias": "MARIANA", "RAINÁ": "MUTIRÃO", "STEPHANIE": "MUTIRÃO", "FLÁVIA": "UND. EXT.", "VICTORIA A": "UND. EXT.", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "VICTORIA V": "FOLGA", "MARIANA": "FÉRIAS"}, {"day": "Dom", "week": 3, "weekday": "Dom", "ferias": "MARIANA", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FÉRIAS", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA"}, {"day": "Seg", "week": 4, "weekday": "Seg", "ferias": "VICTORIA A", "ALEX": "ANDY/CC", "ANDREZA": "OFF2", "CAMILA": "OFF/HM/CIND", "FLÁVIA": "OFF1", "MARIANA": "CC1", "RAINÁ": "COB1", "STEPHANIE": "CC1", "VICTORIA V": "ARIC/OFF", "VICTORIA A": "FÉRIAS"}, {"day": "Ter", "week": 4, "weekday": "Ter", "ferias": "VICTORIA A", "ALEX": "OFF2", "ANDREZA": "HM/HM/CIND", "CAMILA": "CC2", "FLÁVIA": "ANDY", "MARIANA": "OTONEURO", "RAINÁ": "COB2", "STEPHANIE": "OFF2", "VICTORIA V": "ARIC 1/2$", "VICTORIA A": "FÉRIAS"}, {"day": "Qua", "week": 4, "weekday": "Qua", "ferias": "VICTORIA A", "ALEX": "OTONEURO", "ANDREZA": "CC3", "CAMILA": "ANDY/CC", "FLÁVIA": "ARIC 1/2$", "MARIANA": "OFF2", "RAINÁ": "CC3", "STEPHANIE": "OFF/HM/CIND", "VICTORIA V": "COB2", "VICTORIA A": "FÉRIAS"}, {"day": "Qui", "week": 4, "weekday": "Qui", "ferias": "VICTORIA A", "ALEX": "ANDY", "ANDREZA": "ARIC $", "CAMILA": "OFF2", "FLÁVIA": "COB2", "MARIANA": "CC4", "RAINÁ": "OFF/HM/CIND", "STEPHANIE": "OTONEURO", "VICTORIA V": "CC4", "VICTORIA A": "FÉRIAS"}, {"day": "Sex", "week": 4, "weekday": "Sex", "ferias": "VICTORIA A", "ALEX": "HM/HM/CIND", "ANDREZA": "OFF1", "CAMILA": "OTONEURO", "FLÁVIA": "CC5", "MARIANA": "HM/PO", "RAINÁ": "ARIC $", "STEPHANIE": "CC5", "VICTORIA V": "COB1", "VICTORIA A": "FÉRIAS"}, {"day": "Sáb", "week": 4, "weekday": "Sáb", "ferias": "VICTORIA A", "MARIANA": "MUTIRÃO", "VICTORIA V": "MUTIRÃO", "RAINÁ": "UND. EXT.", "STEPHANIE": "UND. EXT.", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "VICTORIA A": "FÉRIAS"}, {"day": "Dom", "week": 4, "weekday": "Dom", "ferias": "VICTORIA A", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FÉRIAS", "VICTORIA V": "FOLGA"}], "Julho": [{"day": "Seg", "week": 1, "weekday": "Seg", "ferias": "VICTORIA A", "ALEX": "COB1", "ANDREZA": "CC1", "CAMILA": "ARIC/OFF", "FLÁVIA": "ANDY/CC", "MARIANA": "OFF2", "RAINÁ": "OFF/HM/CIND", "STEPHANIE": "OFF1", "VICTORIA V": "CC1", "VICTORIA A": "FÉRIAS"}, {"day": "Ter", "week": 1, "weekday": "Ter", "ferias": "VICTORIA A", "ALEX": "COB2", "ANDREZA": "OFF2", "CAMILA": "ARIC 1/2$", "FLÁVIA": "OFF2", "MARIANA": "HM/HM/CIND", "RAINÁ": "CC2", "STEPHANIE": "ANDY", "VICTORIA V": "OTONEURO", "VICTORIA A": "FÉRIAS"}, {"day": "Qua", "week": 1, "weekday": "Qua", "ferias": "VICTORIA A", "ALEX": "CC3", "ANDREZA": "OFF/HM/CIND", "CAMILA": "COB2", "FLÁVIA": "OTONEURO", "MARIANA": "CC3", "RAINÁ": "ANDY/CC", "STEPHANIE": "ARIC 1/2$", "VICTORIA V": "OFF2", "VICTORIA A": "FÉRIAS"}, {"day": "Qui", "week": 1, "weekday": "Qui", "ferias": "VICTORIA A", "ALEX": "OFF/HM/CIND", "ANDREZA": "OTONEURO", "CAMILA": "CC4", "FLÁVIA": "ANDY", "MARIANA": "ARIC $", "RAINÁ": "OFF2", "STEPHANIE": "COB2", "VICTORIA V": "CC4", "VICTORIA A": "FÉRIAS"}, {"day": "Sex", "week": 1, "weekday": "Sex", "ferias": "VICTORIA A", "ALEX": "ARIC $", "ANDREZA": "CC5", "CAMILA": "HM/PO", "FLÁVIA": "HM/HM/CIND", "MARIANA": "OFF1", "RAINÁ": "OTONEURO", "STEPHANIE": "CC5", "VICTORIA V": "COB1", "VICTORIA A": "FÉRIAS"}, {"day": "Sáb", "week": 1, "weekday": "Sáb", "ferias": "VICTORIA A", "ALEX": "MUTIRÃO", "ANDREZA": "MUTIRÃO", "VICTORIA V": "UND. EXT.", "CAMILA": "UND. EXT.", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FÉRIAS"}, {"day": "Dom", "week": 1, "weekday": "Dom", "ferias": "VICTORIA A", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FÉRIAS", "VICTORIA V": "FOLGA"}, {"day": "Seg", "week": 2, "weekday": "Seg", "ferias": "VICTORIA V", "ALEX": "CC1", "ANDREZA": "ARIC/OFF", "CAMILA": "ANDY/CC", "FLÁVIA": "OFF2", "MARIANA": "OFF/HM/CIND", "RAINÁ": "OFF1", "STEPHANIE": "CC1", "VICTORIA A": "COB1", "VICTORIA V": "FÉRIAS"}, {"day": "Ter", "week": 2, "weekday": "Ter", "ferias": "VICTORIA V", "ALEX": "OFF2", "ANDREZA": "ARIC 1/2$", "CAMILA": "OFF2", "FLÁVIA": "HM/HM/CIND", "MARIANA": "CC2", "RAINÁ": "ANDY", "STEPHANIE": "OTONEURO", "VICTORIA A": "COB2", "VICTORIA V": "FÉRIAS"}, {"day": "Qua", "week": 2, "weekday": "Qua", "ferias": "VICTORIA V", "ALEX": "OFF/HM/CIND", "ANDREZA": "COB2", "CAMILA": "OTONEURO", "FLÁVIA": "CC3", "MARIANA": "ANDY/CC", "RAINÁ": "ARIC 1/2$", "STEPHANIE": "OFF2", "VICTORIA A": "CC3", "VICTORIA V": "FÉRIAS"}, {"day": "Qui", "week": 2, "weekday": "Qui", "ferias": "VICTORIA V", "ALEX": "OTONEURO", "ANDREZA": "CC4", "CAMILA": "ANDY", "FLÁVIA": "ARIC $", "MARIANA": "OFF2", "RAINÁ": "COB2", "STEPHANIE": "CC4", "VICTORIA A": "OFF/HM/CIND", "VICTORIA V": "FÉRIAS"}, {"day": "Sex", "week": 2, "weekday": "Sex", "ferias": "VICTORIA V", "ALEX": "CC5", "ANDREZA": "COB1", "CAMILA": "HM/HM/CIND", "FLÁVIA": "OFF1", "MARIANA": "OTONEURO", "RAINÁ": "CC5", "STEPHANIE": "HM/PO", "VICTORIA A": "ARIC $", "VICTORIA V": "FÉRIAS"}, {"day": "Sáb", "week": 2, "weekday": "Sáb", "ferias": "VICTORIA V", "VICTORIA A": "MUTIRÃO", "CAMILA": "MUTIRÃO", "ALEX": "UND. EXT.", "ANDREZA": "UND. EXT.", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA V": "FÉRIAS"}, {"day": "Dom", "week": 2, "weekday": "Dom", "ferias": "VICTORIA V", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FÉRIAS"}, {"day": "Seg", "week": 3, "weekday": "Seg", "ferias": "VICTORIA V", "ALEX": "ARIC/OFF", "ANDREZA": "ANDY/CC", "CAMILA": "OFF2", "FLÁVIA": "OFF/HM/CIND", "MARIANA": "OFF1", "RAINÁ": "CC1", "STEPHANIE": "COB1", "VICTORIA A": "CC1", "VICTORIA V": "FÉRIAS"}, {"day": "Ter", "week": 3, "weekday": "Ter", "ferias": "VICTORIA V", "ALEX": "ARIC 1/2$", "ANDREZA": "OFF2", "CAMILA": "HM/HM/CIND", "FLÁVIA": "CC2", "MARIANA": "ANDY", "RAINÁ": "OTONEURO", "STEPHANIE": "COB2", "VICTORIA A": "OFF2", "VICTORIA V": "FÉRIAS"}, {"day": "Qua", "week": 3, "weekday": "Qua", "ferias": "VICTORIA V", "ALEX": "COB2", "ANDREZA": "OTONEURO", "CAMILA": "CC3", "FLÁVIA": "ANDY/CC", "MARIANA": "ARIC 1/2$", "RAINÁ": "OFF2", "STEPHANIE": "CC3", "VICTORIA A": "OFF/HM/CIND", "VICTORIA V": "FÉRIAS"}, {"day": "Qui", "week": 3, "weekday": "Qui", "ferias": "VICTORIA V", "ALEX": "CC4", "ANDREZA": "ANDY", "CAMILA": "ARIC $", "FLÁVIA": "OFF2", "MARIANA": "COB2", "RAINÁ": "CC4", "STEPHANIE": "OFF/HM/CIND", "VICTORIA A": "OTONEURO", "VICTORIA V": "FÉRIAS"}, {"day": "Sex", "week": 3, "weekday": "Sex", "ferias": "VICTORIA V", "ALEX": "HM/HM/CIND", "ANDREZA": "COB1", "CAMILA": "OFF1", "FLÁVIA": "OTONEURO", "MARIANA": "CC5", "RAINÁ": "HM/PO", "STEPHANIE": "ARIC $", "VICTORIA A": "CC5", "VICTORIA V": "FÉRIAS"}, {"day": "Sáb", "week": 3, "weekday": "Sáb", "ferias": "VICTORIA V", "FLÁVIA": "MUTIRÃO", "MARIANA": "MUTIRÃO", "RAINÁ": "UND. EXT.", "STEPHANIE": "UND. EXT.", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FÉRIAS"}, {"day": "Dom", "week": 3, "weekday": "Dom", "ferias": "VICTORIA V", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FÉRIAS"}, {"day": "Seg", "week": 4, "weekday": "Seg", "ferias": "ANDREZA", "ALEX": "CC1", "CAMILA": "CC1", "FLÁVIA": "ARIC/OFF", "MARIANA": "ANDY/CC", "RAINÁ": "OFF2", "STEPHANIE": "OFF/HM/CIND", "VICTORIA A": "OFF1", "VICTORIA V": "COB1", "ANDREZA": "FÉRIAS"}, {"day": "Ter", "week": 4, "weekday": "Ter", "ferias": "ANDREZA", "ALEX": "COB2", "CAMILA": "OFF2", "FLÁVIA": "ARIC 1/2$", "MARIANA": "OFF2", "RAINÁ": "HM/HM/CIND", "STEPHANIE": "CC2", "VICTORIA A": "ANDY", "VICTORIA V": "OTONEURO", "ANDREZA": "FÉRIAS"}, {"day": "Qua", "week": 4, "weekday": "Qua", "ferias": "ANDREZA", "ALEX": "CC3", "CAMILA": "OFF/HM/CIND", "FLÁVIA": "COB2", "MARIANA": "OTONEURO", "RAINÁ": "CC3", "STEPHANIE": "ANDY/CC", "VICTORIA A": "ARIC 1/2$", "VICTORIA V": "OFF2", "ANDREZA": "FÉRIAS"}, {"day": "Qui", "week": 4, "weekday": "Qui", "ferias": "ANDREZA", "ALEX": "OFF/HM/CIND", "CAMILA": "OTONEURO", "FLÁVIA": "CC4", "MARIANA": "ANDY", "RAINÁ": "ARIC $", "STEPHANIE": "OFF2", "VICTORIA A": "COB2", "VICTORIA V": "CC4", "ANDREZA": "FÉRIAS"}, {"day": "Sex", "week": 4, "weekday": "Sex", "ferias": "ANDREZA", "ALEX": "OFF1", "CAMILA": "CC5", "FLÁVIA": "COB1", "MARIANA": "HM/HM/CIND", "RAINÁ": "ARIC $", "STEPHANIE": "OTONEURO", "VICTORIA A": "CC5", "VICTORIA V": "HM/PO", "ANDREZA": "FÉRIAS"}, {"day": "Sáb", "week": 4, "weekday": "Sáb", "ferias": "ANDREZA", "RAINÁ": "MUTIRÃO", "STEPHANIE": "MUTIRÃO", "FLÁVIA": "UND. EXT.", "MARIANA": "UND. EXT.", "ALEX": "FOLGA", "CAMILA": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA", "ANDREZA": "FÉRIAS"}, {"day": "Dom", "week": 4, "weekday": "Dom", "ferias": "ANDREZA", "ALEX": "FOLGA", "ANDREZA": "FÉRIAS", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA"}], "Agosto": [{"day": "Seg", "week": 1, "weekday": "Seg", "ferias": "ANDREZA", "ALEX": "OFF/HM/CIND", "CAMILA": "OFF1", "FLÁVIA": "CC1", "MARIANA": "COB1", "RAINÁ": "CC1", "STEPHANIE": "ARIC/OFF", "VICTORIA A": "ANDY/CC", "VICTORIA V": "OFF2", "ANDREZA": "FÉRIAS"}, {"day": "Ter", "week": 1, "weekday": "Ter", "ferias": "ANDREZA", "ALEX": "CC2", "CAMILA": "ANDY", "FLÁVIA": "OTONEURO", "MARIANA": "COB2", "RAINÁ": "OFF2", "STEPHANIE": "ARIC 1/2$", "VICTORIA A": "OFF2", "VICTORIA V": "HM/HM/CIND", "ANDREZA": "FÉRIAS"}, {"day": "Qua", "week": 1, "weekday": "Qua", "ferias": "ANDREZA", "ALEX": "ANDY/CC", "CAMILA": "ARIC 1/2$", "FLÁVIA": "OFF2", "MARIANA": "CC3", "RAINÁ": "OFF/HM/CIND", "STEPHANIE": "COB2", "VICTORIA A": "OTONEURO", "VICTORIA V": "CC3", "ANDREZA": "FÉRIAS"}, {"day": "Qui", "week": 1, "weekday": "Qui", "ferias": "ANDREZA", "ALEX": "OFF2", "CAMILA": "COB2", "FLÁVIA": "CC4", "MARIANA": "OFF/HM/CIND", "RAINÁ": "OTONEURO", "STEPHANIE": "CC4", "VICTORIA A": "ANDY", "VICTORIA V": "ARIC $", "ANDREZA": "FÉRIAS"}, {"day": "Sex", "week": 1, "weekday": "Sex", "ferias": "ANDREZA", "ALEX": "OTONEURO", "CAMILA": "CC5", "FLÁVIA": "OFF1", "MARIANA": "ARIC $", "RAINÁ": "COB1", "STEPHANIE": "CC5", "VICTORIA A": "HM/HM/CIND", "VICTORIA V": "HM/PO", "ANDREZA": "FÉRIAS"}, {"day": "Sáb", "week": 1, "weekday": "Sáb", "ferias": "ANDREZA", "VICTORIA A": "MUTIRÃO", "VICTORIA V": "MUTIRÃO", "ALEX": "UND. EXT.", "CAMILA": "UND. EXT.", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "ANDREZA": "FÉRIAS"}, {"day": "Dom", "week": 1, "weekday": "Dom", "ferias": "ANDREZA", "ALEX": "FOLGA", "ANDREZA": "FÉRIAS", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA"}, {"day": "Seg", "week": 2, "weekday": "Seg", "ferias": "RAINÁ", "ALEX": "OFF2", "ANDREZA": "OFF/HM/CIND", "CAMILA": "OFF1", "FLÁVIA": "CC1", "MARIANA": "COB1", "STEPHANIE": "CC1", "VICTORIA A": "ARIC/OFF", "VICTORIA V": "ANDY/CC", "RAINÁ": "FÉRIAS"}, {"day": "Ter", "week": 2, "weekday": "Ter", "ferias": "RAINÁ", "ALEX": "HM/HM/CIND", "ANDREZA": "CC2", "CAMILA": "ANDY", "FLÁVIA": "OTONEURO", "MARIANA": "COB2", "STEPHANIE": "OFF2", "VICTORIA A": "ARIC 1/2$", "VICTORIA V": "OFF2", "RAINÁ": "FÉRIAS"}, {"day": "Qua", "week": 2, "weekday": "Qua", "ferias": "RAINÁ", "ALEX": "CC3", "ANDREZA": "ANDY/CC", "CAMILA": "ARIC 1/2$", "FLÁVIA": "OFF2", "MARIANA": "CC3", "STEPHANIE": "OFF/HM/CIND", "VICTORIA A": "COB2", "VICTORIA V": "OTONEURO", "RAINÁ": "FÉRIAS"}, {"day": "Qui", "week": 2, "weekday": "Qui", "ferias": "RAINÁ", "ALEX": "ARIC $", "ANDREZA": "OFF2", "CAMILA": "COB2", "FLÁVIA": "CC4", "MARIANA": "OFF/HM/CIND", "STEPHANIE": "OTONEURO", "VICTORIA A": "CC4", "VICTORIA V": "ANDY", "RAINÁ": "FÉRIAS"}, {"day": "Sex", "week": 2, "weekday": "Sex", "ferias": "RAINÁ", "ALEX": "CC5", "ANDREZA": "OTONEURO", "CAMILA": "OFF1", "FLÁVIA": "HM/PO", "MARIANA": "ARIC $", "STEPHANIE": "CC5", "VICTORIA A": "COB1", "VICTORIA V": "HM/HM/CIND", "RAINÁ": "FÉRIAS"}, {"day": "Sáb", "week": 2, "weekday": "Sáb", "ferias": "RAINÁ", "ALEX": "MUTIRÃO", "ANDREZA": "MUTIRÃO", "VICTORIA A": "UND. EXT.", "VICTORIA V": "UND. EXT.", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "STEPHANIE": "FOLGA", "RAINÁ": "FÉRIAS"}, {"day": "Dom", "week": 2, "weekday": "Dom", "ferias": "RAINÁ", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FÉRIAS", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA"}, {"day": "Seg", "week": 3, "weekday": "Seg", "ferias": "RAINÁ", "ALEX": "CC1", "ANDREZA": "ARIC/OFF", "CAMILA": "ANDY/CC", "FLÁVIA": "OFF2", "MARIANA": "OFF/HM/CIND", "STEPHANIE": "OFF1", "VICTORIA A": "CC1", "VICTORIA V": "COB1", "RAINÁ": "FÉRIAS"}, {"day": "Ter", "week": 3, "weekday": "Ter", "ferias": "RAINÁ", "ALEX": "OFF2", "ANDREZA": "ARIC 1/2$", "CAMILA": "OFF2", "FLÁVIA": "HM/HM/CIND", "MARIANA": "CC2", "STEPHANIE": "ANDY", "VICTORIA A": "OTONEURO", "VICTORIA V": "COB2", "RAINÁ": "FÉRIAS"}, {"day": "Qua", "week": 3, "weekday": "Qua", "ferias": "RAINÁ", "ALEX": "OFF/HM/CIND", "ANDREZA": "COB2", "CAMILA": "OTONEURO", "FLÁVIA": "CC3", "MARIANA": "ANDY/CC", "STEPHANIE": "ARIC 1/2$", "VICTORIA A": "OFF2", "VICTORIA V": "CC3", "RAINÁ": "FÉRIAS"}, {"day": "Qui", "week": 3, "weekday": "Qui", "ferias": "RAINÁ", "ALEX": "OTONEURO", "ANDREZA": "CC4", "CAMILA": "ANDY", "FLÁVIA": "ARIC $", "MARIANA": "OFF2", "STEPHANIE": "COB2", "VICTORIA A": "CC4", "VICTORIA V": "OFF/HM/CIND", "RAINÁ": "FÉRIAS"}, {"day": "Sex", "week": 3, "weekday": "Sex", "ferias": "RAINÁ", "ALEX": "OFF1", "ANDREZA": "COB1", "CAMILA": "HM/HM/CIND", "FLÁVIA": "CC5", "MARIANA": "OTONEURO", "STEPHANIE": "CC5", "VICTORIA A": "HM/PO", "VICTORIA V": "ARIC $", "RAINÁ": "FÉRIAS"}, {"day": "Sáb", "week": 3, "weekday": "Sáb", "ferias": "RAINÁ", "CAMILA": "MUTIRÃO", "FLÁVIA": "MUTIRÃO", "ANDREZA": "UND. EXT.", "MARIANA": "UND. EXT.", "ALEX": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA", "RAINÁ": "FÉRIAS"}, {"day": "Dom", "week": 3, "weekday": "Dom", "ferias": "RAINÁ", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FÉRIAS", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA"}, {"day": "Seg", "week": 4, "weekday": "Seg", "ferias": "ALEX", "ANDREZA": "OFF1", "CAMILA": "CC1", "FLÁVIA": "COB1", "MARIANA": "CC1", "RAINÁ": "ARIC/OFF", "STEPHANIE": "ANDY/CC", "VICTORIA A": "OFF2", "VICTORIA V": "OFF/HM/CIND", "ALEX": "FÉRIAS"}, {"day": "Ter", "week": 4, "weekday": "Ter", "ferias": "ALEX", "ANDREZA": "ANDY", "CAMILA": "OTONEURO", "FLÁVIA": "COB2", "MARIANA": "OFF2", "RAINÁ": "ARIC 1/2$", "STEPHANIE": "OFF2", "VICTORIA A": "HM/HM/CIND", "VICTORIA V": "CC2", "ALEX": "FÉRIAS"}, {"day": "Qua", "week": 4, "weekday": "Qua", "ferias": "ALEX", "ANDREZA": "ARIC 1/2$", "CAMILA": "OFF2", "FLÁVIA": "CC3", "MARIANA": "OFF/HM/CIND", "RAINÁ": "COB2", "STEPHANIE": "OTONEURO", "VICTORIA A": "CC3", "VICTORIA V": "ANDY/CC", "ALEX": "FÉRIAS"}, {"day": "Qui", "week": 4, "weekday": "Qui", "ferias": "ALEX", "ANDREZA": "COB2", "CAMILA": "CC4", "FLÁVIA": "OFF/HM/CIND", "MARIANA": "OTONEURO", "RAINÁ": "CC4", "STEPHANIE": "ANDY", "VICTORIA A": "ARIC $", "VICTORIA V": "OFF2", "ALEX": "FÉRIAS"}, {"day": "Sex", "week": 4, "weekday": "Sex", "ferias": "ALEX", "ANDREZA": "CC5", "CAMILA": "HM/PO", "FLÁVIA": "ARIC $", "MARIANA": "CC5", "RAINÁ": "COB1", "STEPHANIE": "HM/HM/CIND", "VICTORIA A": "OFF1", "VICTORIA V": "OTONEURO", "ALEX": "FÉRIAS"}, {"day": "Sáb", "week": 4, "weekday": "Sáb", "ferias": "ALEX", "MARIANA": "MUTIRÃO", "RAINÁ": "MUTIRÃO", "FLÁVIA": "UND. EXT.", "STEPHANIE": "UND. EXT.", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA", "ALEX": "FÉRIAS"}, {"day": "Dom", "week": 4, "weekday": "Dom", "ferias": "ALEX", "ALEX": "FÉRIAS", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA"}], "Setembro": [{"day": "Seg", "week": 1, "weekday": "Seg", "ferias": "ALEX", "ANDREZA": "CC1", "CAMILA": "COB1", "FLÁVIA": "CC1", "MARIANA": "ARIC/OFF", "RAINÁ": "ANDY/CC", "STEPHANIE": "OFF2", "VICTORIA A": "OFF/HM/CIND", "VICTORIA V": "OFF1", "ALEX": "FÉRIAS"}, {"day": "Ter", "week": 1, "weekday": "Ter", "ferias": "ALEX", "ANDREZA": "OTONEURO", "CAMILA": "COB2", "FLÁVIA": "OFF2", "MARIANA": "ARIC 1/2$", "RAINÁ": "OFF2", "STEPHANIE": "HM/HM/CIND", "VICTORIA A": "CC2", "VICTORIA V": "ANDY", "ALEX": "FÉRIAS"}, {"day": "Qua", "week": 1, "weekday": "Qua", "ferias": "ALEX", "ANDREZA": "OFF2", "CAMILA": "CC3", "FLÁVIA": "OFF/HM/CIND", "MARIANA": "COB2", "RAINÁ": "OTONEURO", "STEPHANIE": "CC3", "VICTORIA A": "ANDY/CC", "VICTORIA V": "ARIC 1/2$", "ALEX": "FÉRIAS"}, {"day": "Qui", "week": 1, "weekday": "Qui", "ferias": "ALEX", "ANDREZA": "CC4", "CAMILA": "OFF/HM/CIND", "FLÁVIA": "OTONEURO", "MARIANA": "CC4", "RAINÁ": "ANDY", "STEPHANIE": "ARIC $", "VICTORIA A": "OFF2", "VICTORIA V": "COB2", "ALEX": "FÉRIAS"}, {"day": "Sex", "week": 1, "weekday": "Sex", "ferias": "ALEX", "ANDREZA": "OFF1", "CAMILA": "ARIC $", "FLÁVIA": "CC5", "MARIANA": "COB1", "RAINÁ": "HM/HM/CIND", "STEPHANIE": "HM/PO", "VICTORIA A": "OTONEURO", "VICTORIA V": "CC5", "ALEX": "FÉRIAS"}, {"day": "Sáb", "week": 1, "weekday": "Sáb", "ferias": "ALEX", "STEPHANIE": "MUTIRÃO", "VICTORIA A": "MUTIRÃO", "RAINÁ": "UND. EXT.", "VICTORIA V": "UND. EXT.", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "ALEX": "FÉRIAS"}, {"day": "Dom", "week": 1, "weekday": "Dom", "ferias": "ALEX", "ALEX": "FÉRIAS", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA"}, {"day": "Seg", "week": 2, "weekday": "Seg", "ferias": "FLÁVIA", "ALEX": "OFF2", "ANDREZA": "OFF/HM/CIND", "CAMILA": "OFF1", "MARIANA": "CC1", "RAINÁ": "COB1", "STEPHANIE": "CC1", "VICTORIA A": "ARIC/OFF", "VICTORIA V": "ANDY/CC", "FLÁVIA": "FÉRIAS"}, {"day": "Ter", "week": 2, "weekday": "Ter", "ferias": "FLÁVIA", "ALEX": "HM/HM/CIND", "ANDREZA": "CC2", "CAMILA": "ANDY", "MARIANA": "OTONEURO", "RAINÁ": "COB2", "STEPHANIE": "OFF2", "VICTORIA A": "ARIC 1/2$", "VICTORIA V": "OFF2", "FLÁVIA": "FÉRIAS"}, {"day": "Qua", "week": 2, "weekday": "Qua", "ferias": "FLÁVIA", "ALEX": "CC3", "ANDREZA": "ANDY/CC", "CAMILA": "ARIC 1/2$", "MARIANA": "OFF2", "RAINÁ": "CC3", "STEPHANIE": "OFF/HM/CIND", "VICTORIA A": "COB2", "VICTORIA V": "OTONEURO", "FLÁVIA": "FÉRIAS"}, {"day": "Qui", "week": 2, "weekday": "Qui", "ferias": "FLÁVIA", "ALEX": "ARIC $", "ANDREZA": "OFF2", "CAMILA": "COB2", "MARIANA": "CC4", "RAINÁ": "OFF/HM/CIND", "STEPHANIE": "OTONEURO", "VICTORIA A": "CC4", "VICTORIA V": "ANDY", "FLÁVIA": "FÉRIAS"}, {"day": "Sex", "week": 2, "weekday": "Sex", "ferias": "FLÁVIA", "ALEX": "CC5", "ANDREZA": "OTONEURO", "CAMILA": "OFF1", "MARIANA": "HM/PO", "RAINÁ": "ARIC $", "STEPHANIE": "CC5", "VICTORIA A": "COB1", "VICTORIA V": "HM/HM/CIND", "FLÁVIA": "FÉRIAS"}, {"day": "Sáb", "week": 2, "weekday": "Sáb", "ferias": "FLÁVIA", "VICTORIA V": "MUTIRÃO", "ALEX": "MUTIRÃO", "VICTORIA A": "UND. EXT.", "ANDREZA": "UND. EXT.", "CAMILA": "FOLGA", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "FLÁVIA": "FÉRIAS"}, {"day": "Dom", "week": 2, "weekday": "Dom", "ferias": "FLÁVIA", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FÉRIAS", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA"}, {"day": "Seg", "week": 3, "weekday": "Seg", "ferias": "FLÁVIA", "ALEX": "ANDY/CC", "ANDREZA": "OFF2", "CAMILA": "OFF/HM/CIND", "MARIANA": "OFF1", "RAINÁ": "CC1", "STEPHANIE": "COB1", "VICTORIA A": "CC1", "VICTORIA V": "ARIC/OFF", "FLÁVIA": "FÉRIAS"}, {"day": "Ter", "week": 3, "weekday": "Ter", "ferias": "FLÁVIA", "ALEX": "OFF2", "ANDREZA": "HM/HM/CIND", "CAMILA": "CC2", "MARIANA": "ANDY", "RAINÁ": "OTONEURO", "STEPHANIE": "COB2", "VICTORIA A": "OFF2", "VICTORIA V": "ARIC 1/2$", "FLÁVIA": "FÉRIAS"}, {"day": "Qua", "week": 3, "weekday": "Qua", "ferias": "FLÁVIA", "ALEX": "OTONEURO", "ANDREZA": "CC3", "CAMILA": "ANDY/CC", "MARIANA": "ARIC 1/2$", "RAINÁ": "OFF2", "STEPHANIE": "CC3", "VICTORIA A": "OFF/HM/CIND", "VICTORIA V": "COB2", "FLÁVIA": "FÉRIAS"}, {"day": "Qui", "week": 3, "weekday": "Qui", "ferias": "FLÁVIA", "ALEX": "ANDY", "ANDREZA": "ARIC $", "CAMILA": "OFF2", "MARIANA": "COB2", "RAINÁ": "CC4", "STEPHANIE": "OFF/HM/CIND", "VICTORIA A": "OTONEURO", "VICTORIA V": "CC4", "FLÁVIA": "FÉRIAS"}, {"day": "Sex", "week": 3, "weekday": "Sex", "ferias": "FLÁVIA", "ALEX": "HM/HM/CIND", "ANDREZA": "HM/PO", "CAMILA": "OTONEURO", "MARIANA": "CC5", "RAINÁ": "OFF1", "STEPHANIE": "ARIC $", "VICTORIA A": "CC5", "VICTORIA V": "COB1", "FLÁVIA": "FÉRIAS"}, {"day": "Sáb", "week": 3, "weekday": "Sáb", "ferias": "FLÁVIA", "ANDREZA": "MUTIRÃO", "CAMILA": "MUTIRÃO", "ALEX": "UND. EXT.", "MARIANA": "UND. EXT.", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA", "FLÁVIA": "FÉRIAS"}, {"day": "Dom", "week": 3, "weekday": "Dom", "ferias": "FLÁVIA", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FÉRIAS", "MARIANA": "FOLGA", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA"}, {"day": "Seg", "week": 4, "weekday": "Seg", "ferias": "MARIANA", "ALEX": "ARIC/OFF", "ANDREZA": "ANDY/CC", "CAMILA": "OFF2", "FLÁVIA": "OFF/HM/CIND", "RAINÁ": "OFF1", "STEPHANIE": "CC1", "VICTORIA A": "COB1", "VICTORIA V": "CC1", "MARIANA": "FÉRIAS"}, {"day": "Ter", "week": 4, "weekday": "Ter", "ferias": "MARIANA", "ALEX": "ARIC 1/2$", "ANDREZA": "OFF2", "CAMILA": "HM/HM/CIND", "FLÁVIA": "CC2", "RAINÁ": "ANDY", "STEPHANIE": "OTONEURO", "VICTORIA A": "COB2", "VICTORIA V": "OFF2", "MARIANA": "FÉRIAS"}, {"day": "Qua", "week": 4, "weekday": "Qua", "ferias": "MARIANA", "ALEX": "COB2", "ANDREZA": "OTONEURO", "CAMILA": "CC3", "FLÁVIA": "ANDY/CC", "RAINÁ": "ARIC 1/2$", "STEPHANIE": "OFF2", "VICTORIA A": "CC3", "VICTORIA V": "OFF/HM/CIND", "MARIANA": "FÉRIAS"}, {"day": "Qui", "week": 4, "weekday": "Qui", "ferias": "MARIANA", "ALEX": "CC4", "ANDREZA": "ANDY", "CAMILA": "ARIC $", "FLÁVIA": "OFF2", "RAINÁ": "COB2", "STEPHANIE": "CC4", "VICTORIA A": "OFF/HM/CIND", "VICTORIA V": "OTONEURO", "MARIANA": "FÉRIAS"}, {"day": "Sex", "week": 4, "weekday": "Sex", "ferias": "MARIANA", "ALEX": "OFF1", "ANDREZA": "HM/HM/CIND", "CAMILA": "COB1", "FLÁVIA": "OTONEURO", "RAINÁ": "CC5", "STEPHANIE": "HM/PO", "VICTORIA A": "ARIC $", "VICTORIA V": "CC5", "MARIANA": "FÉRIAS"}, {"day": "Sáb", "week": 4, "weekday": "Sáb", "ferias": "MARIANA", "FLÁVIA": "MUTIRÃO", "RAINÁ": "MUTIRÃO", "CAMILA": "UND. EXT.", "STEPHANIE": "UND. EXT.", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA", "MARIANA": "FÉRIAS"}, {"day": "Dom", "week": 4, "weekday": "Dom", "ferias": "MARIANA", "ALEX": "FOLGA", "ANDREZA": "FOLGA", "CAMILA": "FOLGA", "FLÁVIA": "FOLGA", "MARIANA": "FÉRIAS", "RAINÁ": "FOLGA", "STEPHANIE": "FOLGA", "VICTORIA A": "FOLGA", "VICTORIA V": "FOLGA"}]};
+const NO = {"Junho": {"1": ["ALEX", "ANDREZA", "CAMILA", "MARIANA", "RAINÁ", "STEPHANIE", "VICTORIA A", "VICTORIA V"], "2": ["ALEX", "ANDREZA", "CAMILA", "FLÁVIA", "RAINÁ", "STEPHANIE", "VICTORIA A", "VICTORIA V"], "3": ["ALEX", "ANDREZA", "CAMILA", "FLÁVIA", "RAINÁ", "STEPHANIE", "VICTORIA A", "VICTORIA V"], "4": ["ALEX", "ANDREZA", "CAMILA", "FLÁVIA", "MARIANA", "RAINÁ", "STEPHANIE", "VICTORIA V"]}, "Julho": {"1": ["ALEX", "ANDREZA", "CAMILA", "FLÁVIA", "MARIANA", "RAINÁ", "STEPHANIE", "VICTORIA V"], "2": ["ALEX", "ANDREZA", "CAMILA", "FLÁVIA", "MARIANA", "RAINÁ", "STEPHANIE", "VICTORIA A"], "3": ["ALEX", "ANDREZA", "CAMILA", "FLÁVIA", "MARIANA", "RAINÁ", "STEPHANIE", "VICTORIA A"], "4": ["ALEX", "CAMILA", "FLÁVIA", "MARIANA", "RAINÁ", "STEPHANIE", "VICTORIA A", "VICTORIA V"]}, "Agosto": {"1": ["ALEX", "CAMILA", "FLÁVIA", "MARIANA", "RAINÁ", "STEPHANIE", "VICTORIA A", "VICTORIA V"], "2": ["ALEX", "ANDREZA", "CAMILA", "FLÁVIA", "MARIANA", "STEPHANIE", "VICTORIA A", "VICTORIA V"], "3": ["ALEX", "ANDREZA", "CAMILA", "FLÁVIA", "MARIANA", "STEPHANIE", "VICTORIA A", "VICTORIA V"], "4": ["ANDREZA", "CAMILA", "FLÁVIA", "MARIANA", "RAINÁ", "STEPHANIE", "VICTORIA A", "VICTORIA V"]}, "Setembro": {"1": ["ANDREZA", "CAMILA", "FLÁVIA", "MARIANA", "RAINÁ", "STEPHANIE", "VICTORIA A", "VICTORIA V"], "2": ["ALEX", "ANDREZA", "CAMILA", "MARIANA", "RAINÁ", "STEPHANIE", "VICTORIA A", "VICTORIA V"], "3": ["ALEX", "ANDREZA", "CAMILA", "MARIANA", "RAINÁ", "STEPHANIE", "VICTORIA A", "VICTORIA V"], "4": ["ALEX", "ANDREZA", "CAMILA", "FLÁVIA", "RAINÁ", "STEPHANIE", "VICTORIA A", "VICTORIA V"]}};
+const FP = {"Junho": [["FLÁVIA", [1]], ["MARIANA", [2, 3]], ["VICTORIA A", [4]]], "Julho": [["VICTORIA A", [1]], ["VICTORIA V", [2, 3]], ["ANDREZA", [4]]], "Agosto": [["ANDREZA", [1]], ["RAINÁ", [2, 3]], ["ALEX", [4]]], "Setembro": [["ALEX", [1]], ["FLÁVIA", [2, 3]], ["MARIANA", [4]]]};
+const FC = {"OFF1": {"cat": "premium1", "label": "OFF1", "bg": "#1e3a8a", "t": "#93c5fd"}, "COB1": {"cat": "premium1", "label": "COB1", "bg": "#1d4ed8", "t": "#bfdbfe"}, "OFF2": {"cat": "premium2", "label": "OFF2", "bg": "#1e40af", "t": "#60a5fa"}, "COB2": {"cat": "premium2", "label": "COB2", "bg": "#1a56db", "t": "#93c5fd"}, "ARIC $": {"cat": "financial", "label": "ARIC $", "bg": "#064e3b", "t": "#34d399"}, "ARIC 1/2$": {"cat": "financial", "label": "ARIC ½$", "bg": "#065f46", "t": "#6ee7b7"}, "ARIC/OFF": {"cat": "financial", "label": "ARIC/OFF", "bg": "#064e3b", "t": "#a7f3d0"}, "CC1": {"cat": "heavy", "label": "CC1", "bg": "#7c2d12", "t": "#fdba74"}, "CC2": {"cat": "heavy", "label": "CC2", "bg": "#7c2d12", "t": "#fdba74"}, "CC3": {"cat": "heavy", "label": "CC3", "bg": "#7c2d12", "t": "#fdba74"}, "CC4": {"cat": "heavy", "label": "CC4", "bg": "#7c2d12", "t": "#fdba74"}, "CC5": {"cat": "heavy", "label": "CC5", "bg": "#7c2d12", "t": "#fdba74"}, "ANDY/CC": {"cat": "heavy", "label": "ANDY/CC", "bg": "#92400e", "t": "#fbbf24"}, "MUTIRÃO": {"cat": "heavy", "label": "MUTIRÃO", "bg": "#78350f", "t": "#fb923c"}, "HM/HM/CIND": {"cat": "heavy", "label": "HM/CIND", "bg": "#9a3412", "t": "#fed7aa"}, "HM/PO": {"cat": "heavy", "label": "HM/PO", "bg": "#c2410c", "t": "#ffedd5"}, "ANDY": {"cat": "light", "label": "ANDY", "bg": "#4c1d95", "t": "#c4b5fd"}, "OTONEURO": {"cat": "light", "label": "OTONEURO", "bg": "#5b21b6", "t": "#ddd6fe"}, "UND. EXT.": {"cat": "light", "label": "UND.EXT", "bg": "#3b0764", "t": "#e9d5ff"}, "OFF/HM/CIND": {"cat": "medium", "label": "OFF/HM", "bg": "#fef08a", "t": "#78350f"}, "FOLGA": {"cat": "folga", "label": "FOLGA", "bg": "#1f2937", "t": "#6b7280"}, "FÉRIAS": {"cat": "ferias", "label": "FÉRIAS", "bg": "rgba(134,239,172,0.08)", "t": "#86efac"}};
+const DT={"Junho": {"1": {"Seg": "01/06", "Ter": "02/06", "Qua": "03/06", "Qui": "04/06", "Sex": "05/06", "Sáb": "06/06", "Dom": "07/06"}, "2": {"Seg": "08/06", "Ter": "09/06", "Qua": "10/06", "Qui": "11/06", "Sex": "12/06", "Sáb": "13/06", "Dom": "14/06"}, "3": {"Seg": "15/06", "Ter": "16/06", "Qua": "17/06", "Qui": "18/06", "Sex": "19/06", "Sáb": "20/06", "Dom": "21/06"}, "4": {"Seg": "22/06", "Ter": "23/06", "Qua": "24/06", "Qui": "25/06", "Sex": "26/06", "Sáb": "27/06", "Dom": "28/06"}}, "Julho": {"1": {"Seg": "29/06", "Ter": "30/06", "Qua": "01/07", "Qui": "02/07", "Sex": "03/07", "Sáb": "04/07", "Dom": "05/07"}, "2": {"Seg": "06/07", "Ter": "07/07", "Qua": "08/07", "Qui": "09/07", "Sex": "10/07", "Sáb": "11/07", "Dom": "12/07"}, "3": {"Seg": "13/07", "Ter": "14/07", "Qua": "15/07", "Qui": "16/07", "Sex": "17/07", "Sáb": "18/07", "Dom": "19/07"}, "4": {"Seg": "20/07", "Ter": "21/07", "Qua": "22/07", "Qui": "23/07", "Sex": "24/07", "Sáb": "25/07", "Dom": "26/07"}}, "Agosto": {"1": {"Seg": "27/07", "Ter": "28/07", "Qua": "29/07", "Qui": "30/07", "Sex": "31/07", "Sáb": "01/08", "Dom": "02/08"}, "2": {"Seg": "03/08", "Ter": "04/08", "Qua": "05/08", "Qui": "06/08", "Sex": "07/08", "Sáb": "08/08", "Dom": "09/08"}, "3": {"Seg": "10/08", "Ter": "11/08", "Qua": "12/08", "Qui": "13/08", "Sex": "14/08", "Sáb": "15/08", "Dom": "16/08"}, "4": {"Seg": "17/08", "Ter": "18/08", "Qua": "19/08", "Qui": "20/08", "Sex": "21/08", "Sáb": "22/08", "Dom": "23/08"}}, "Setembro": {"1": {"Seg": "24/08", "Ter": "25/08", "Qua": "26/08", "Qui": "27/08", "Sex": "28/08", "Sáb": "29/08", "Dom": "30/08"}, "2": {"Seg": "31/08", "Ter": "01/09", "Qua": "02/09", "Qui": "03/09", "Sex": "04/09", "Sáb": "05/09", "Dom": "06/09"}, "3": {"Seg": "07/09", "Ter": "08/09", "Qua": "09/09", "Qui": "10/09", "Sex": "11/09", "Sáb": "12/09", "Dom": "13/09"}, "4": {"Seg": "14/09", "Ter": "15/09", "Qua": "16/09", "Qui": "17/09", "Sex": "18/09", "Sáb": "19/09", "Dom": "20/09"}}};
+const DL={"01/06": {"mes": "Junho", "wk": 1, "dia": "Seg"}, "02/06": {"mes": "Junho", "wk": 1, "dia": "Ter"}, "03/06": {"mes": "Junho", "wk": 1, "dia": "Qua"}, "04/06": {"mes": "Junho", "wk": 1, "dia": "Qui"}, "05/06": {"mes": "Junho", "wk": 1, "dia": "Sex"}, "06/06": {"mes": "Junho", "wk": 1, "dia": "Sáb"}, "07/06": {"mes": "Junho", "wk": 1, "dia": "Dom"}, "08/06": {"mes": "Junho", "wk": 2, "dia": "Seg"}, "09/06": {"mes": "Junho", "wk": 2, "dia": "Ter"}, "10/06": {"mes": "Junho", "wk": 2, "dia": "Qua"}, "11/06": {"mes": "Junho", "wk": 2, "dia": "Qui"}, "12/06": {"mes": "Junho", "wk": 2, "dia": "Sex"}, "13/06": {"mes": "Junho", "wk": 2, "dia": "Sáb"}, "14/06": {"mes": "Junho", "wk": 2, "dia": "Dom"}, "15/06": {"mes": "Junho", "wk": 3, "dia": "Seg"}, "16/06": {"mes": "Junho", "wk": 3, "dia": "Ter"}, "17/06": {"mes": "Junho", "wk": 3, "dia": "Qua"}, "18/06": {"mes": "Junho", "wk": 3, "dia": "Qui"}, "19/06": {"mes": "Junho", "wk": 3, "dia": "Sex"}, "20/06": {"mes": "Junho", "wk": 3, "dia": "Sáb"}, "21/06": {"mes": "Junho", "wk": 3, "dia": "Dom"}, "22/06": {"mes": "Junho", "wk": 4, "dia": "Seg"}, "23/06": {"mes": "Junho", "wk": 4, "dia": "Ter"}, "24/06": {"mes": "Junho", "wk": 4, "dia": "Qua"}, "25/06": {"mes": "Junho", "wk": 4, "dia": "Qui"}, "26/06": {"mes": "Junho", "wk": 4, "dia": "Sex"}, "27/06": {"mes": "Junho", "wk": 4, "dia": "Sáb"}, "28/06": {"mes": "Junho", "wk": 4, "dia": "Dom"}, "29/06": {"mes": "Julho", "wk": 1, "dia": "Seg"}, "30/06": {"mes": "Julho", "wk": 1, "dia": "Ter"}, "01/07": {"mes": "Julho", "wk": 1, "dia": "Qua"}, "02/07": {"mes": "Julho", "wk": 1, "dia": "Qui"}, "03/07": {"mes": "Julho", "wk": 1, "dia": "Sex"}, "04/07": {"mes": "Julho", "wk": 1, "dia": "Sáb"}, "05/07": {"mes": "Julho", "wk": 1, "dia": "Dom"}, "06/07": {"mes": "Julho", "wk": 2, "dia": "Seg"}, "07/07": {"mes": "Julho", "wk": 2, "dia": "Ter"}, "08/07": {"mes": "Julho", "wk": 2, "dia": "Qua"}, "09/07": {"mes": "Julho", "wk": 2, "dia": "Qui"}, "10/07": {"mes": "Julho", "wk": 2, "dia": "Sex"}, "11/07": {"mes": "Julho", "wk": 2, "dia": "Sáb"}, "12/07": {"mes": "Julho", "wk": 2, "dia": "Dom"}, "13/07": {"mes": "Julho", "wk": 3, "dia": "Seg"}, "14/07": {"mes": "Julho", "wk": 3, "dia": "Ter"}, "15/07": {"mes": "Julho", "wk": 3, "dia": "Qua"}, "16/07": {"mes": "Julho", "wk": 3, "dia": "Qui"}, "17/07": {"mes": "Julho", "wk": 3, "dia": "Sex"}, "18/07": {"mes": "Julho", "wk": 3, "dia": "Sáb"}, "19/07": {"mes": "Julho", "wk": 3, "dia": "Dom"}, "20/07": {"mes": "Julho", "wk": 4, "dia": "Seg"}, "21/07": {"mes": "Julho", "wk": 4, "dia": "Ter"}, "22/07": {"mes": "Julho", "wk": 4, "dia": "Qua"}, "23/07": {"mes": "Julho", "wk": 4, "dia": "Qui"}, "24/07": {"mes": "Julho", "wk": 4, "dia": "Sex"}, "25/07": {"mes": "Julho", "wk": 4, "dia": "Sáb"}, "26/07": {"mes": "Julho", "wk": 4, "dia": "Dom"}, "27/07": {"mes": "Agosto", "wk": 1, "dia": "Seg"}, "28/07": {"mes": "Agosto", "wk": 1, "dia": "Ter"}, "29/07": {"mes": "Agosto", "wk": 1, "dia": "Qua"}, "30/07": {"mes": "Agosto", "wk": 1, "dia": "Qui"}, "31/07": {"mes": "Agosto", "wk": 1, "dia": "Sex"}, "01/08": {"mes": "Agosto", "wk": 1, "dia": "Sáb"}, "02/08": {"mes": "Agosto", "wk": 1, "dia": "Dom"}, "03/08": {"mes": "Agosto", "wk": 2, "dia": "Seg"}, "04/08": {"mes": "Agosto", "wk": 2, "dia": "Ter"}, "05/08": {"mes": "Agosto", "wk": 2, "dia": "Qua"}, "06/08": {"mes": "Agosto", "wk": 2, "dia": "Qui"}, "07/08": {"mes": "Agosto", "wk": 2, "dia": "Sex"}, "08/08": {"mes": "Agosto", "wk": 2, "dia": "Sáb"}, "09/08": {"mes": "Agosto", "wk": 2, "dia": "Dom"}, "10/08": {"mes": "Agosto", "wk": 3, "dia": "Seg"}, "11/08": {"mes": "Agosto", "wk": 3, "dia": "Ter"}, "12/08": {"mes": "Agosto", "wk": 3, "dia": "Qua"}, "13/08": {"mes": "Agosto", "wk": 3, "dia": "Qui"}, "14/08": {"mes": "Agosto", "wk": 3, "dia": "Sex"}, "15/08": {"mes": "Agosto", "wk": 3, "dia": "Sáb"}, "16/08": {"mes": "Agosto", "wk": 3, "dia": "Dom"}, "17/08": {"mes": "Agosto", "wk": 4, "dia": "Seg"}, "18/08": {"mes": "Agosto", "wk": 4, "dia": "Ter"}, "19/08": {"mes": "Agosto", "wk": 4, "dia": "Qua"}, "20/08": {"mes": "Agosto", "wk": 4, "dia": "Qui"}, "21/08": {"mes": "Agosto", "wk": 4, "dia": "Sex"}, "22/08": {"mes": "Agosto", "wk": 4, "dia": "Sáb"}, "23/08": {"mes": "Agosto", "wk": 4, "dia": "Dom"}, "24/08": {"mes": "Setembro", "wk": 1, "dia": "Seg"}, "25/08": {"mes": "Setembro", "wk": 1, "dia": "Ter"}, "26/08": {"mes": "Setembro", "wk": 1, "dia": "Qua"}, "27/08": {"mes": "Setembro", "wk": 1, "dia": "Qui"}, "28/08": {"mes": "Setembro", "wk": 1, "dia": "Sex"}, "29/08": {"mes": "Setembro", "wk": 1, "dia": "Sáb"}, "30/08": {"mes": "Setembro", "wk": 1, "dia": "Dom"}, "31/08": {"mes": "Setembro", "wk": 2, "dia": "Seg"}, "01/09": {"mes": "Setembro", "wk": 2, "dia": "Ter"}, "02/09": {"mes": "Setembro", "wk": 2, "dia": "Qua"}, "03/09": {"mes": "Setembro", "wk": 2, "dia": "Qui"}, "04/09": {"mes": "Setembro", "wk": 2, "dia": "Sex"}, "05/09": {"mes": "Setembro", "wk": 2, "dia": "Sáb"}, "06/09": {"mes": "Setembro", "wk": 2, "dia": "Dom"}, "07/09": {"mes": "Setembro", "wk": 3, "dia": "Seg"}, "08/09": {"mes": "Setembro", "wk": 3, "dia": "Ter"}, "09/09": {"mes": "Setembro", "wk": 3, "dia": "Qua"}, "10/09": {"mes": "Setembro", "wk": 3, "dia": "Qui"}, "11/09": {"mes": "Setembro", "wk": 3, "dia": "Sex"}, "12/09": {"mes": "Setembro", "wk": 3, "dia": "Sáb"}, "13/09": {"mes": "Setembro", "wk": 3, "dia": "Dom"}, "14/09": {"mes": "Setembro", "wk": 4, "dia": "Seg"}, "15/09": {"mes": "Setembro", "wk": 4, "dia": "Ter"}, "16/09": {"mes": "Setembro", "wk": 4, "dia": "Qua"}, "17/09": {"mes": "Setembro", "wk": 4, "dia": "Qui"}, "18/09": {"mes": "Setembro", "wk": 4, "dia": "Sex"}, "19/09": {"mes": "Setembro", "wk": 4, "dia": "Sáb"}, "20/09": {"mes": "Setembro", "wk": 4, "dia": "Dom"}};
+
+function fs(f){return FC[f]||{bg:"#1f2937",t:"#6b7280",cat:"other",label:f};}
+
+function toggleTheme(){
+  isDark=!isDark;document.body.classList.toggle("light",!isDark);
+  document.getElementById("tbtn").textContent=isDark?"🌙":"☀️";
+}
+
+function show(m){
+  cur=m;
+  const ALL_TABS=["Junho","Julho","Agosto","Setembro","trocas","realoc","pessoal","visao","analise"];
+  document.querySelectorAll(".tab").forEach((t,i)=>t.classList.toggle("on",ALL_TABS[i]===m));
+  const isMonth=["Junho","Julho","Agosto","Setembro"].includes(m);
+  document.querySelector(".main").style.display=isMonth?"flex":"none";
+  document.getElementById("panel-trocas").style.display=m==="trocas"?"flex":"none";
+  document.getElementById("panel-realoc").style.display=m==="realoc"?"flex":"none";
+  document.getElementById("panel-pessoal").style.display=m==="pessoal"?"flex":"none";
+  document.getElementById("panel-visao").style.display=m==="visao"?"flex":"none";
+  if(isMonth){renderLeft();renderRight();}
+  else if(m==="trocas")renderTrocas();
+  else if(m==="realoc")renderRealoc();
+  else if(m==="pessoal")renderPessoal();
+  else if(m==="visao")renderVisao();
+  else if(m==="analise"){document.querySelector(".main").style.display="flex";renderLeft();renderRight();}
+}
+
+function getNames(){
+  // Always return all 9 doctors in fixed alphabetical order
+  return ALL.slice().sort();
+}
+
+function getFeriasMes(mes){
+  return FP[mes]||[];
+}
+
+
+function ferColor(){return getComputedStyle(document.body).getPropertyValue('--fer-t').trim()||'#86efac';}
+function renderLeft(){
+  const el=document.getElementById("left");
+  if(cur==="analise"){renderAnalysis(el);return;}
+  const rows=S[cur]||[];
+  const ferInfo=getFeriasMes(cur);
+  
+  // Legend
+  const cats=[
+    {label:"Premium L1 (OFF1/COB1)",c:"#93c5fd"},
+    {label:"Premium L2 (OFF2/COB2)",c:"#60a5fa"},
+    {label:"Financeira (ARIC)",c:"#34d399"},
+    {label:"Pesada (CC/HM/MUTIRÃO)",c:"#fdba74"},
+    {label:"Leve (ANDY/OTO/UND)",c:"#c4b5fd"},
+    {label:"Intermediária (OFF/HM)",c:"#fde047"},
+    {label:"Folga",c:"#6b7280"},
+    {label:"Férias",c:"#86efac"},
+  ];
+  let html='<div class="leg">';
+  cats.forEach(x=>{html+=`<span class="lc" style="background:rgba(255,255,255,0.05);color:${x.c}"><span class="ld" style="background:${x.c}"></span>${x.label}</span>`;} );
+  html+='</div>';
+  
+  // Férias bar
+  html+='<div class="ferias-bar">🌴 Férias:';
+  ferInfo.forEach(([doc,wks])=>{
+    html+=`<span class="ferias-chip">${doc} — sem. ${wks.join(",")}</span>`;
+  });
+  html+='</div>';
+  
+  // Weeks
+  [1,2,3,4].forEach(wk=>{
+    const wkRows=rows.filter(r=>r.week===wk);
+    const names=getNames();
+    const ferDoc=wkRows[0]?.ferias||"";
+    html+=`<div class="wblock"><div class="wtitle">Semana ${wk}${ferDoc?` · <span style="color:#86efac;font-weight:700">🌴 ${ferDoc} em férias</span>`:""}`;
+    html=html.replace(`Semana ${wk}${ferDoc?` · <span style="color:#86efac;font-weight:700">🌴 ${ferDoc} em férias</span>`:""}`,"");
+    // rebuild
+    html+=`<div class="wblock"><div class="wtitle">Semana ${wk}`;
+    if(ferDoc) html+=` &nbsp;<span style="color:#86efac;font-size:.62rem;font-weight:600">🌴 ${ferDoc} em férias</span>`;
+    html+='</div>';
+    html+='<table class="stbl"><tr class="rh"><th class="dc">Dia</th>';
+    names.forEach(n=>{const isFer=n===(wkRows[0]?.ferias||"");html+=`<th style="min-width:70px;max-width:90px;${isFer?"opacity:.6;color:#86efac":""}">${n==="VICTORIA A"?"VIC.A":n==="VICTORIA V"?"VIC.V":shortName(n)}${isFer?" 🌴":""}</th>`;});
+    html+='</tr>';
+    wkRows.forEach(row=>{
+      const isSab=row.day==="Sáb";
+      const isDom=row.day==="Dom";
+      const dt=(DT[cur]&&DT[cur][String(wk)]&&DT[cur][String(wk)][row.day])||"";
+      html+='<tr style="'+(isDom?'opacity:.7':'')+'"><td class="dayc'+(isSab?' sab':isDom?' dom':'')+'"><span class="dayname">'+row.day+'</span><span class="daydt">'+dt+'</span></td>';
+      names.forEach(name=>{
+        const isFerDoc=name===row.ferias;
+        const f=isFerDoc?"FÉRIAS":(row[name]||"");
+        const s=isFerDoc?{bg:"var(--fer-bg)",t:ferColor()}:fs(f);
+        const lbl=isFerDoc?"🌴 FÉRIAS":(s.label||f);
+        const swp=!isFerDoc&&isSwap(cur,wk,row.day,name);
+        const rlc=!isFerDoc&&isRealoc(cur,wk,row.day,name);
+        const rtxt=rlc?getRealoc(cur,wk,row.day,name):'';
+        html+='<td class="fc'+(swp?' has-swap':'')+(rlc?' has-realoc':'')+'" style="background:'+s.bg+';color:'+s.t+';'+(isFerDoc?'opacity:.65;font-style:italic':'')+'">'
+          +(swp?'<span class="sdot"></span>':'')+(rlc?'<span class="ralert">⚠️</span>':'')
+          +'<div class="fclbl">'+lbl+(swp?' ⇄':'')+'</div>'+(rlc?'<span class="tt">'+rtxt+'</span>':'')
+          +'</td>';
+      });
+      html+='</tr>';
+    });
+    html+='</table></div>';
+  });
+  
+  // Fix double wblock issue from JS string manipulation
+  el.innerHTML=html;
+}
+
+function renderRight(){
+  const el=document.getElementById("rght");
+  if(cur==="analise"){el.innerHTML="";return;}
+  const rows=S[cur]||[];
+  
+  // Count per doctor for this month
+  const counts={};
+  ALL.forEach(m=>{counts[m]={};} );
+  rows.forEach(row=>{
+    ALL.forEach(m=>{
+      const f=row[m];
+      if(f) counts[m][f]=(counts[m][f]||0)+1;
+    });
+  });
+  
+  const ferInfo=getFeriasMes(cur);
+  const ferDocs=ferInfo.map(x=>x[0]);
+  
+  let html=`<div class="stitle">📊 ${cur}</div>`;
+  ALL.forEach(m=>{
+    const c=counts[m];
+    const isFer=ferDocs.includes(m);
+    const prem1=(c["OFF1"]||0)+(c["COB1"]||0);
+    const prem2=(c["OFF2"]||0)+(c["COB2"]||0);
+    const fin=(c["ARIC $"]||0)+(c["ARIC 1/2$"]||0)+(c["ARIC/OFF"]||0);
+    const heavy=(c["HM/HM/CIND"]||0)+(c["HM/PO"]||0)+(c["OFF/HM/CIND"]||0);
+    const oto=c["OTONEURO"]||0;
+    const sab=(c["MUTIRÃO"]||0)+(c["UND. EXT."]||0);
+    html+=`<div class="pcard"${isFer?` style="opacity:.6;border-color:rgba(134,239,172,0.3)"`:""}>
+      <div class="pname">${m}${isFer?` <span style="font-size:.55rem;color:#86efac">🌴 férias</span>`:""}</div>
+      ${isFer?`<div style="font-size:.62rem;color:#86efac">Em férias neste mês</div>`:`
+      <div class="prow"><span class="plbl">Prem L1</span><span class="pval" style="color:#4ade80">${prem1}×</span></div>
+      <div class="prow"><span class="plbl">Prem L2</span><span class="pval" style="color:#60a5fa">${prem2}×</span></div>
+      <div class="prow"><span class="plbl">Financeira</span><span class="pval" style="color:#34d399">${fin}×</span></div>
+      <div class="prow"><span class="plbl">Pesada</span><span class="pval" style="color:#fca5a5">${heavy}×</span></div>
+      <div class="prow"><span class="plbl">OTONEURO</span><span class="pval" style="color:#c4b5fd">${oto}×</span></div>
+      <div class="prow"><span class="plbl">Sáb</span><span class="pval" style="color:#fda4af">${sab}×</span></div>`}
+    </div>`;
+  });
+  el.innerHTML=html;
+}
+
+function renderAnalysis(el){
+  const gc={};ALL.forEach(m=>{gc[m]={};} );
+  ["Junho","Julho","Agosto","Setembro"].forEach(m=>{
+    (S[m]||[]).forEach(row=>{
+      ALL.forEach(p=>{const f=row[p];if(f)gc[p][f]=(gc[p][f]||0)+1;});
+    });
+  });
+  
+  const KF=["OFF1","COB1","OFF2","COB2","ARIC $","ARIC 1/2$","OTONEURO","HM/HM/CIND","HM/PO","OFF/HM/CIND","MUTIRÃO","UND. EXT.","ANDY","ANDY/CC","CC1","CC2","CC3","CC4","CC5"];
+  
+  let html=`<div style="margin-bottom:14px">
+    <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:3px">📊 Análise — Jun a Set 2026</div>
+    <div style="font-size:.66rem;color:var(--text2)">Distribuição acumulada · 4 meses · 9 médicos</div>
+  </div>`;
+  
+  html+=`<div class="an-sec"><div class="an-title">Range por Função (4 meses)</div>`;
+  KF.forEach(f=>{
+    const s=fs(f);
+    const vals=ALL.map(p=>gc[p][f]||0);
+    const rng=Math.max(...vals)-Math.min(...vals);
+    const mx=Math.max(...vals);
+    const pct=mx>0?(rng/mx)*100:0;
+    const col=rng===0?"#4ade80":rng<=2?"#fbbf24":rng<=3?"#fb923c":"#f87171";
+    html+=`<div class="rrow">
+      <span class="rfunc" style="color:${s.t||"#8fa8c8"}">${s.label||f}</span>
+      <div class="rbar-w"><div class="rbar" style="width:${Math.max(pct,4)}%;background:${col}"></div></div>
+      <span class="rval" style="color:${col}">${rng}</span>
+    </div>`;
+  });
+  html+='</div>';
+  
+  html+=`<div class="an-sec"><div class="an-title">Totais 4 Meses por Médico</div>
+  <table style="width:100%;border-collapse:collapse;font-size:.63rem">
+  <thead><tr>
+    <th style="text-align:left;padding:3px 5px;color:var(--text3);border-bottom:1px solid var(--border)">Médico</th>
+    <th style="padding:3px 2px;color:#4ade80;border-bottom:1px solid var(--border)">P1</th>
+    <th style="padding:3px 2px;color:#60a5fa;border-bottom:1px solid var(--border)">P2</th>
+    <th style="padding:3px 2px;color:#34d399;border-bottom:1px solid var(--border)">Fin</th>
+    <th style="padding:3px 2px;color:#fca5a5;border-bottom:1px solid var(--border)">Pes</th>
+    <th style="padding:3px 2px;color:#c4b5fd;border-bottom:1px solid var(--border)">OTO</th>
+    <th style="padding:3px 2px;color:#fda4af;border-bottom:1px solid var(--border)">Sáb</th>
+  </tr></thead><tbody>`;
+  ALL.forEach(m=>{
+    const c=gc[m];
+    const p1=(c["OFF1"]||0)+(c["COB1"]||0);
+    const p2=(c["OFF2"]||0)+(c["COB2"]||0);
+    const fin=(c["ARIC $"]||0)+(c["ARIC 1/2$"]||0)+(c["ARIC/OFF"]||0);
+    const pes=(c["HM/HM/CIND"]||0)+(c["HM/PO"]||0)+(c["OFF/HM/CIND"]||0);
+    const oto=c["OTONEURO"]||0;
+    const sab=(c["MUTIRÃO"]||0)+(c["UND. EXT."]||0);
+    html+=`<tr>
+      <td style="padding:3px 5px;font-weight:600;color:var(--text);border-bottom:1px solid var(--border)">${shortName(m)}</td>
+      <td style="padding:3px 2px;text-align:center;color:#4ade80;font-weight:700;border-bottom:1px solid var(--border)">${p1}</td>
+      <td style="padding:3px 2px;text-align:center;color:#60a5fa;font-weight:700;border-bottom:1px solid var(--border)">${p2}</td>
+      <td style="padding:3px 2px;text-align:center;color:#34d399;font-weight:700;border-bottom:1px solid var(--border)">${fin}</td>
+      <td style="padding:3px 2px;text-align:center;color:#fca5a5;font-weight:700;border-bottom:1px solid var(--border)">${pes}</td>
+      <td style="padding:3px 2px;text-align:center;color:#c4b5fd;font-weight:700;border-bottom:1px solid var(--border)">${oto}</td>
+      <td style="padding:3px 2px;text-align:center;color:#fda4af;font-weight:700;border-bottom:1px solid var(--border)">${sab}</td>
+    </tr>`;
+  });
+  html+='</tbody></table></div>';
+  
+  html+=`<div style="background:var(--bg3);border-radius:8px;padding:9px 11px;margin-top:8px;font-size:.62rem;color:var(--text2);line-height:1.6">
+    <div style="font-weight:700;color:var(--text);margin-bottom:3px">⚖️ Critérios</div>
+    OTONEURO · ARIC$ · ARIC½$ · MUTIRÃO · UND.EXT → Range = 0 ✅<br>
+    OFF1/COB1 · OFF2/COB2 compensam-se mutuamente<br>
+    Shifts [0,3,5,6]↔[1,2,4,7] garantem equilíbrio trimestral<br>
+    Desvio padrão mínimo por rotação matemática
+  </div>`;
+  
+  el.innerHTML=html;
+  document.getElementById("rght").innerHTML="";
+}
+
+let cur='Junho',isDark=true;
+// ── TROCAS ─────────────────────────────────────────────────────────────────
+let trocas=[];
+const swapped={};
+const realocs={};
+function isSwap(a,b,d,m){return !!(swapped[a]&&swapped[a][b]&&swapped[a][b][d]&&swapped[a][b][d][m]);}
+function setSwap(a,b,d,m,on){if(!swapped[a])swapped[a]={};if(!swapped[a][b])swapped[a][b]={};if(!swapped[a][b][d])swapped[a][b][d]={};if(on)swapped[a][b][d][m]=true;else delete swapped[a][b][d][m];}
+function isRealoc(a,b,d,m){return !!(realocs[a]&&realocs[a][b]&&realocs[a][b][d]&&realocs[a][b][d][m]!==undefined);}
+function getRealoc(a,b,d,m){return(realocs[a]&&realocs[a][b]&&realocs[a][b][d]&&realocs[a][b][d][m])||'';}
+function setRealoc(a,b,d,m,v){if(!realocs[a])realocs[a]={};if(!realocs[a][b])realocs[a][b]={};if(!realocs[a][b][d])realocs[a][b][d]={};if(v!==null)realocs[a][b][d][m]=v;else delete realocs[a][b][d][m];}
+
+
+function renderTrocas(){
+  const el=document.getElementById("panel-trocas");
+  const MONTHS=["Junho","Julho","Agosto","Setembro"];
+  const FUNCS=["OFF1","COB1","OFF2","COB2","ANDY","ANDY/CC","OTONEURO","CC1","CC2","CC3","CC4","CC5","ARIC $","ARIC 1/2$","ARIC/OFF","HM/HM/CIND","HM/PO","OFF/HM/CIND","MUTIRÃO","UND. EXT.","FOLGA"];
+  const mOpts=MONTHS.map(m=>`<option value="${m}">${m}</option>`).join("");
+  const dOpts=ALL.map(m=>`<option value="${m}">${m}</option>`).join("");
+  const fOpts=`<option value="">—</option>`+FUNCS.map(f=>`<option value="${f}">${f}</option>`).join("");
+
+  const active=trocas.filter(t=>t.active).length;
+  const undone=trocas.filter(t=>!t.active).length;
+
+  let html=`<div style="display:flex;flex-direction:column;gap:10px;width:300px;flex-shrink:0">
+    <div class="pcard" style="padding:14px">
+      <div class="pname" style="font-size:.82rem;margin-bottom:12px">🔄 Nova Troca</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div><div class="plbl" style="margin-bottom:3px">Data (DD/MM)</div><input type="text" id="tr-date" placeholder="ex: 15/06" maxlength="5" oninput="onDI(this)" style="width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;padding:6px 9px;color:var(--text);font-size:.82rem;font-family:inherit;letter-spacing:1px"><div id="tr-hint" style="font-size:.62rem;color:var(--text3);margin-top:3px;min-height:14px"></div></div>
+        <div style="display:flex;gap:8px">
+          <div style="flex:1"><div class="plbl" style="margin-bottom:3px">Médico 1</div><select id="tr-m1" onchange="updateTrFuncs()" style="width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;padding:6px 8px;color:var(--text);font-size:.76rem;font-family:inherit">${dOpts}</select></div>
+          <div style="flex:1"><div class="plbl" style="margin-bottom:3px">Função atual</div><select id="tr-f1" style="width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;padding:6px 8px;color:var(--text);font-size:.76rem;font-family:inherit;opacity:.7"><option>—</option></select></div>
+        </div>
+        <div style="text-align:center;font-size:.68rem;color:var(--text3)">↕ troca com</div>
+        <div style="display:flex;gap:8px">
+          <div style="flex:1"><div class="plbl" style="margin-bottom:3px">Médico 2</div><select id="tr-m2" onchange="updateTrFuncs()" style="width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;padding:6px 8px;color:var(--text);font-size:.76rem;font-family:inherit">${dOpts}</select></div>
+          <div style="flex:1"><div class="plbl" style="margin-bottom:3px">Função atual</div><select id="tr-f2" style="width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;padding:6px 8px;color:var(--text);font-size:.76rem;font-family:inherit;opacity:.7"><option>—</option></select></div>
+        </div>
+        <div><div class="plbl" style="margin-bottom:3px">Observação</div><input type="text" id="tr-obs" placeholder="Motivo..." style="width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;padding:6px 8px;color:var(--text);font-size:.76rem;font-family:inherit"></div>
+        <button onclick="submitTroca()" style="background:var(--accent);color:#fff;border:none;border-radius:7px;padding:8px;font-weight:700;font-size:.78rem;cursor:pointer;font-family:inherit;width:100%">✓ Confirmar Troca</button>
+        <div id="tr-msg" style="font-size:.68rem;text-align:center;min-height:16px;color:#4ade80"></div>
+      </div>
+    </div>
+    <div class="pcard" style="padding:12px">
+      <div class="pname" style="margin-bottom:8px">📊 Resumo</div>
+      <div class="prow"><span class="plbl">Ativas</span><span class="pval" style="color:#4ade80">${active}</span></div>
+      <div class="prow"><span class="plbl">Desfeitas</span><span class="pval" style="color:var(--text3)">${undone}</span></div>
+    </div>
+  </div>
+
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;flex-shrink:0">
+      <div style="font-size:.82rem;font-weight:700;color:var(--text)">Histórico de Trocas</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span style="font-size:.68rem;color:var(--text3)">${trocas.length} troca(s)</span>
+        ${trocas.length>0?`<button onclick="resetTrocas()" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);color:#f87171;border-radius:6px;padding:3px 10px;font-size:.68rem;font-weight:700;cursor:pointer;font-family:inherit">🗑 Resetar</button>`:""}
+      </div>
+    </div>
+    <div style="flex:1;overflow-y:auto;border-radius:10px;border:1px solid var(--border);background:var(--card)">
+      ${trocas.length===0
+        ?`<div style="padding:32px;text-align:center;color:var(--text3);font-size:.8rem">Nenhuma troca registrada.<br><span style="font-size:.68rem">Use o formulário ao lado.</span></div>`
+        :`<table style="width:100%;border-collapse:collapse;font-size:.72rem">
+          <thead><tr>
+            <th style="background:var(--bg2);color:var(--text3);font-size:.6rem;font-weight:700;text-transform:uppercase;padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);position:sticky;top:0">Mês</th>
+            <th style="background:var(--bg2);color:var(--text3);font-size:.6rem;font-weight:700;text-transform:uppercase;padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);position:sticky;top:0">Data</th>
+            <th style="background:var(--bg2);color:var(--text3);font-size:.6rem;font-weight:700;text-transform:uppercase;padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);position:sticky;top:0">Dia</th>
+            <th style="background:var(--bg2);color:var(--text3);font-size:.6rem;font-weight:700;text-transform:uppercase;padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);position:sticky;top:0">Médico 1 → Função</th>
+            <th style="background:var(--bg2);color:var(--text3);font-size:.6rem;font-weight:700;text-transform:uppercase;padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);position:sticky;top:0">Médico 2 → Função</th>
+            <th style="background:var(--bg2);color:var(--text3);font-size:.6rem;font-weight:700;text-transform:uppercase;padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);position:sticky;top:0">Obs</th>
+            <th style="background:var(--bg2);color:var(--text3);font-size:.6rem;font-weight:700;text-transform:uppercase;padding:8px 10px;text-align:center;border-bottom:1px solid var(--border);position:sticky;top:0">Ação</th>
+          </tr></thead><tbody>
+          ${trocas.map(t=>{
+            const s1o=fs(t.f1o),s1n=fs(t.f1n),s2o=fs(t.f2o),s2n=fs(t.f2n);
+            const row_style=t.active?"":"opacity:.45";
+            return `<tr style="${row_style}">
+              <td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text2)">${t.mes}</td>
+              <td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text2);font-family:var(--mono);font-weight:600">${t.date}</td>
+              <td style="padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text2)">${t.dia}</td>
+              <td style="padding:7px 10px;border-bottom:1px solid var(--border)">
+                <div style="font-weight:600;color:var(--text);font-size:.7rem">${t.m1}</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px">
+                  <span style="background:${s1o.bg};color:${s1o.t};border-radius:4px;padding:1px 5px;font-size:.6rem;font-weight:600">${t.f1o}</span>
+                  <span style="color:var(--text3);font-size:.62rem">→</span>
+                  <span style="background:${s1n.bg};color:${s1n.t};border-radius:4px;padding:1px 5px;font-size:.6rem;font-weight:600">${t.f1n}</span>
+                </div>
+              </td>
+              <td style="padding:7px 10px;border-bottom:1px solid var(--border)">
+                <div style="font-weight:600;color:var(--text);font-size:.7rem">${t.m2}</div>
+                <div style="display:flex;align-items:center;gap:4px;margin-top:2px">
+                  <span style="background:${s2o.bg};color:${s2o.t};border-radius:4px;padding:1px 5px;font-size:.6rem;font-weight:600">${t.f2o}</span>
+                  <span style="color:var(--text3);font-size:.62rem">→</span>
+                  <span style="background:${s2n.bg};color:${s2n.t};border-radius:4px;padding:1px 5px;font-size:.6rem;font-weight:600">${t.f2n}</span>
+                </div>
+              </td>
+              <td style="padding:7px 10px;border-bottom:1px solid var(--border);font-size:.68rem;color:var(--text3)">${t.obs||"—"}</td>
+              <td style="padding:7px 10px;border-bottom:1px solid var(--border);text-align:center">
+                ${t.active?`<button onclick="undoTroca(${t.id})" style="background:none;border:1px solid var(--border2);border-radius:5px;padding:2px 8px;font-size:.62rem;color:var(--text3);cursor:pointer;font-family:inherit">Desfazer</button>`:
+                `<span style="font-size:.6rem;color:var(--text3)">—</span>`}
+              </td>
+            </tr>`;
+          }).join("")}
+          </tbody></table>`
+      }
+    </div>
+  </div>`;
+
+  el.innerHTML=html;
+  if(ALL.length>1){document.getElementById("tr-m2").selectedIndex=1;}
+  updateTrFuncs();
+}
+
+function onDI(el){
+  let v=el.value.replace(/[^0-9/]/g,'');
+  if(v.length===2&&!v.includes('/'))v+='/';
+  el.value=v;
+  const h=document.getElementById('tr-hint');
+  if(h){if(v.length===5){const i=DL[v];if(i){h.style.color='#4ade80';h.textContent=i.dia+', Sem '+i.wk+' '+i.mes;}else{h.style.color='#f87171';h.textContent='Data nao encontrada';}}else h.textContent='';}
+  updateTrFuncs();
+}
+function updateTrFuncs(){
+  const dv=document.getElementById('tr-date')?.value;
+  const m1=document.getElementById('tr-m1')?.value;
+  const m2=document.getElementById('tr-m2')?.value;
+  if(!dv||dv.length<5||!m1||!m2)return;
+  const info=DL[dv];if(!info)return;
+  const row=(S[info.mes]||[]).filter(r=>r.week===info.wk&&r.day===info.dia)[0]||{};
+  const f1=document.getElementById('tr-f1');
+  const f2=document.getElementById('tr-f2');
+  if(f1)f1.innerHTML='<option>'+(row[m1]||'—')+'</option>';
+  if(f2)f2.innerHTML='<option>'+(row[m2]||'—')+'</option>';
+}
+
+function submitTroca(){
+  const dv=document.getElementById('tr-date').value;
+  const m1=document.getElementById('tr-m1').value;
+  const m2=document.getElementById('tr-m2').value;
+  const obs=document.getElementById('tr-obs').value.trim();
+  const msg=document.getElementById('tr-msg');
+  if(m1===m2){if(msg){msg.style.color='#f87171';msg.textContent='Selecione medicos diferentes';}return;}
+  if(!dv||dv.length<5){if(msg){msg.style.color='#f87171';msg.textContent='Informe a data DD/MM';}return;}
+  const info=DL[dv];
+  if(!info){if(msg){msg.style.color='#f87171';msg.textContent='Data nao encontrada';}return;}
+  const {mes,wk,dia}=info;
+  const row=(S[mes]||[]).find(r=>r.week===wk&&r.day===dia);
+  if(!row)return;
+  const f1o=row[m1]||'',f2o=row[m2]||'';
+  if(!f1o||!f2o||f1o.includes('RIAS')||f2o.includes('RIAS')){if(msg){msg.style.color='#f87171';msg.textContent='Nao pode trocar com medico de ferias';}return;}
+  row[m1]=f2o;row[m2]=f1o;
+  setSwap(mes,wk,dia,m1,true);setSwap(mes,wk,dia,m2,true);
+  trocas.unshift({id:Date.now(),date:dv,mes,wk,dia,m1,f1o,f1n:f2o,m2,f2o,f2n:f1o,obs,active:true});
+  if(msg){msg.style.color='#4ade80';msg.textContent='Confirmado: '+m1+' com '+m2+' em '+dv;}
+  if(['Junho','Julho','Agosto','Setembro'].includes(cur)&&cur===mes){renderLeft();renderRight();}
+  setTimeout(()=>renderTrocas(),50);
+}
+function undoTroca(id){
+  const t=trocas.find(x=>x.id===id);if(!t||!t.active)return;
+  const rows=(S[t.mes]||[]).filter(r=>r.week===t.wk&&r.day===t.dia);
+  const row=rows[0];if(row){row[t.m1]=t.f1o;row[t.m2]=t.f2o;}
+  setSwap(t.mes,t.wk,t.dia,t.m1,false);setSwap(t.mes,t.wk,t.dia,t.m2,false);
+  t.active=false;
+  if(['Junho','Julho','Agosto','Setembro'].includes(cur)&&cur===t.mes){renderLeft();renderRight();}
+  renderTrocas();
+}
+
+function resetTrocas(){
+  trocas.filter(t=>t.active).forEach(t=>{
+    const row=(S[t.mes]||[]).find(r=>r.week===t.wk&&r.day===t.dia);
+    if(row){row[t.m1]=t.f1o;row[t.m2]=t.f2o;}
+    setSwap(t.mes,t.wk,t.dia,t.m1,false);setSwap(t.mes,t.wk,t.dia,t.m2,false);
+  });
+  trocas=[];
+  ['Junho','Julho','Agosto','Setembro'].forEach(m=>{if(cur===m){renderLeft();renderRight();}});
+  renderTrocas();
+}
+
+// ── MEU CALENDÁRIO ────────────────────────────────────────────────────────
+let selectedDoc=ALL[0];
+
+function renderPessoal(){
+  const el=document.getElementById("panel-pessoal");
+  const MONTHS=["Junho","Julho","Agosto","Setembro"];
+
+  // Count per doctor
+  const counts={};
+  ALL.forEach(m=>{counts[m]={};});
+  MONTHS.forEach(mes=>{
+    (S[mes]||[]).forEach(row=>{
+      ALL.forEach(m=>{
+        const f=row[m]||(row.ferias===m?"FÉRIAS":"");
+        if(f)counts[m][f]=(counts[m][f]||0)+1;
+      });
+    });
+  });
+
+  // Doctor chips
+  let chips='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;flex-shrink:0">';
+  ALL.forEach(m=>{
+    const on=m===selectedDoc;
+    chips+=`<div onclick="selectedDoc='${m}';renderPessoal()" style="padding:5px 13px;border-radius:20px;font-size:.74rem;font-weight:600;cursor:pointer;border:1.5px solid ${on?"var(--accent)":"var(--border2)"};background:${on?"var(--accent)":"var(--bg3)"};color:${on?"#fff":"var(--text2)"}">${m}</div>`;
+  });
+  chips+='</div>';
+
+  // Stats row
+  const c=counts[selectedDoc]||{};
+  const STAT_FUNCS=[
+    {f:"OFF1",l:"OFF1",col:"#93c5fd"},{f:"COB1",l:"COB1",col:"#bfdbfe"},
+    {f:"OFF2",l:"OFF2",col:"#60a5fa"},{f:"COB2",l:"COB2",col:"#93c5fd"},
+    {f:"ARIC $",l:"ARIC$",col:"#34d399"},{f:"ARIC 1/2$",l:"ARIC½$",col:"#6ee7b7"},
+    {f:"OTONEURO",l:"OTO",col:"#ddd6fe"},{f:"HM/HM/CIND",l:"HM/CIND",col:"#fdba74"},
+    {f:"MUTIRÃO",l:"MUT",col:"#fb923c"},{f:"UND. EXT.",l:"UND",col:"#e9d5ff"},
+    {f:"FÉRIAS",l:"Férias",col:"#86efac"},
+  ];
+  let stats='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;flex-shrink:0">';
+  STAT_FUNCS.forEach(({f,l,col})=>{
+    const v=c[f]||0;
+    stats+=`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 10px;text-align:center;min-width:52px">
+      <div style="font-size:1rem;font-weight:700;color:${col};font-family:var(--mono)">${v}</div>
+      <div style="font-size:.58rem;color:var(--text3);margin-top:1px;text-transform:uppercase;letter-spacing:.4px">${l}</div>
+    </div>`;
+  });
+  stats+='</div>';
+
+  // Per-month calendar grid
+  let calHtml='<div style="flex:1;overflow-y:auto">';
+  MONTHS.forEach(mes=>{
+    const rows=S[mes]||[];
+    const ferInfo=getFeriasMes(mes);
+    let ferWks=[];
+    ferInfo.forEach(([doc,wks])=>{if(doc===selectedDoc)ferWks=wks;});
+
+    calHtml+=`<div style="margin-bottom:20px">
+      <div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px">
+        ${mes} 2026 ${ferWks.length?`<span style="font-size:.62rem;color:#86efac;font-weight:600">🌴 férias sem. ${ferWks.join(", ")}</span>`:""}
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:10px;overflow:hidden">`;
+
+    [1,2,3,4].forEach(wk=>{
+      const wkRows=rows.filter(r=>r.week===wk);
+      const isFer=ferWks.includes(wk);
+      calHtml+=`<div style="background:var(--card);padding:8px">
+        <div style="font-size:.62rem;font-weight:700;color:${isFer?"#86efac":"var(--accent2)"};margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">Sem ${wk}${isFer?" 🌴":""}</div>`;
+
+      wkRows.forEach(row=>{
+        const f=isFer?"FÉRIAS":(row[selectedDoc]||"");
+        const s=isFer?{bg:"rgba(134,239,172,0.1)",t:"#86efac"}:fs(f);
+        const dt=(DT[mes]&&DT[mes][String(wk)]&&DT[mes][String(wk)][row.day])||"";
+        const pswp=!isFer&&isSwap(mes,wk,row.day,selectedDoc);
+        const prlc=!isFer&&isRealoc(mes,wk,row.day,selectedDoc);
+        const prtxt=prlc?getRealoc(mes,wk,row.day,selectedDoc):'';
+        calHtml+='<div style="display:flex;align-items:center;justify-content:space-between;padding:3px 5px;border-radius:5px;margin-bottom:2px;background:'+s.bg+';'
+          +(pswp?'outline:1px solid rgba(245,158,11,.7);':'')+(prlc?'outline:1px solid rgba(239,68,68,.6);':'')
+          +'" title="'+(prlc?prtxt.replace(/"/g,'&quot;'):'')+'">'
+          +'<span style="font-size:.6rem;color:'+s.t+';font-weight:600">'+row.day
+          +'<span style="font-size:.54rem;opacity:.65;margin-left:3px">'+dt+'</span></span>'
+          +'<span style="font-size:.6rem;font-weight:700;color:'+s.t+';font-family:var(--mono)">'+(fs(f).label||f||'—')+(pswp?' ⇄':'')+(prlc?' ⚠️':'')+'</span></div>';
+      });
+      calHtml+='</div>';
+    });
+    calHtml+='</div></div>';
+  });
+  calHtml+='</div>';
+
+  el.innerHTML=chips+stats+calHtml;
+}
+
+// ── VISÃO GERAL ───────────────────────────────────────────────────────────
+function renderVisao(){
+  const el=document.getElementById("panel-visao");
+  const MONTHS=["Junho","Julho","Agosto","Setembro"];
+
+  const gc={};ALL.forEach(m=>{gc[m]={};});
+  MONTHS.forEach(mes=>{
+    const ferInfo=getFeriasMes(mes);
+    (S[mes]||[]).forEach(row=>{
+      const ferDoc=row.ferias||"";
+      ALL.forEach(m=>{
+        const f=(m===ferDoc)?"FÉRIAS":(row[m]||"");
+        if(f)gc[m][f]=(gc[m][f]||0)+1;
+      });
+    });
+  });
+
+  const TOTAL_DAYS=112;
+  const presencaFn=m=>(gc[m]["OFF1"]||0)+(gc[m]["COB1"]||0)+(gc[m]["OFF2"]||0)+(gc[m]["COB2"]||0)+(gc[m]["ARIC $"]||0)+(gc[m]["ARIC 1/2$"]||0)+(gc[m]["ARIC/OFF"]||0)+(gc[m]["HM/HM/CIND"]||0)+(gc[m]["HM/PO"]||0)+(gc[m]["CC1"]||0)+(gc[m]["CC2"]||0)+(gc[m]["CC3"]||0)+(gc[m]["CC4"]||0)+(gc[m]["CC5"]||0)+(gc[m]["ANDY/CC"]||0)+(gc[m]["MUTIRÃO"]||0)+(gc[m]["ANDY"]||0)+(gc[m]["OTONEURO"]||0)+(gc[m]["UND. EXT."]||0)+(gc[m]["OFF/HM/CIND"]||0);
+  const CAT_COLS=[
+    {label:"Prem L1",col:"#93c5fd",fn:m=>(gc[m]["OFF1"]||0)+(gc[m]["COB1"]||0)},
+    {label:"Prem L2",col:"#60a5fa",fn:m=>(gc[m]["OFF2"]||0)+(gc[m]["COB2"]||0)},
+    {label:"Financ.",col:"#34d399",fn:m=>(gc[m]["ARIC $"]||0)+(gc[m]["ARIC 1/2$"]||0)+(gc[m]["ARIC/OFF"]||0)},
+    {label:"Pesada",col:"#fdba74",fn:m=>(gc[m]["HM/HM/CIND"]||0)+(gc[m]["HM/PO"]||0)+(gc[m]["CC1"]||0)+(gc[m]["CC2"]||0)+(gc[m]["CC3"]||0)+(gc[m]["CC4"]||0)+(gc[m]["CC5"]||0)+(gc[m]["ANDY/CC"]||0)+(gc[m]["MUTIRÃO"]||0)},
+    {label:"Leve",col:"#c4b5fd",fn:m=>(gc[m]["ANDY"]||0)+(gc[m]["OTONEURO"]||0)+(gc[m]["UND. EXT."]||0)},
+    {label:"Interm.",col:"#fde047",fn:m=>(gc[m]["OFF/HM/CIND"]||0)},
+    {label:"Folga",col:"#6b7280",fn:m=>gc[m]["FOLGA"]||0},
+    {label:"Férias",col:"#86efac",fn:m=>gc[m]["FÉRIAS"]||0},
+    {label:"% Presença",col:"#a78bfa",fn:m=>Math.round(presencaFn(m)/TOTAL_DAYS*100)},
+  ];
+
+  // ── TOTALS TABLE FIRST — full width, no overflow ──────────────────────
+  let tblHtml=`<div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;flex-shrink:0">
+    <div style="font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:14px">📊 Totais por Médico — 4 Meses (Jun–Set 2026)</div>
+    <table style="width:100%;border-collapse:collapse;font-size:.76rem">
+      <thead>
+        <tr>
+          <th style="text-align:left;padding:7px 10px;color:var(--text3);border-bottom:2px solid var(--border2);font-size:.65rem;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap">Médico</th>
+          ${CAT_COLS.map(({label,col})=>`<th style="padding:7px 8px;color:${col};border-bottom:2px solid var(--border2);font-size:.65rem;text-transform:uppercase;letter-spacing:.4px;text-align:center;white-space:nowrap">${label}</th>`).join("")}
+        </tr>
+      </thead>
+      <tbody>
+        ${ALL.map((m,ri)=>`<tr style="background:${ri%2===0?"var(--bg3)20":"transparent"}">
+          <td style="padding:8px 10px;font-weight:700;color:var(--text);border-bottom:1px solid var(--border);white-space:nowrap">${m}</td>
+          ${CAT_COLS.map(({fn,col,label})=>{const v=fn(m);const disp=label==='% Presença'?(v>0?v+'%':'—'):(v>0?v:'—');return `<td style="padding:8px 8px;text-align:center;font-weight:700;color:${v>0?col:"var(--text3)"};border-bottom:1px solid var(--border);font-family:var(--mono)">${disp}</td>`;}).join("")}
+        </tr>`).join("")}
+        <tr style="border-top:2px solid var(--border2)">
+          <td style="padding:6px 10px;font-size:.62rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px">Range</td>
+          ${CAT_COLS.map(({fn,label})=>{const vals=ALL.map(m=>fn(m));const rng=Math.max(...vals)-Math.min(...vals);const col=rng===0?"#4ade80":rng<=2?"#fbbf24":rng<=4?"#fb923c":"#f87171";const dispR=label==='% Presença'?rng+'pp':rng;return `<td style="padding:6px 8px;text-align:center;font-weight:700;color:${col};font-family:var(--mono);font-size:.72rem">${dispR}</td>`;}).join("")}
+        </tr>
+      </tbody>
+    </table>
+  </div>`;
+
+  // ── RANGE BAR CHART SECOND ──────────────────────────────────────────────
+  const KEY_FUNCS=[
+    {f:"OFF1",col:"#93c5fd"},{f:"COB1",col:"#bfdbfe"},
+    {f:"OFF2",col:"#60a5fa"},{f:"COB2",col:"#93c5fd"},
+    {f:"ARIC $",col:"#34d399"},{f:"ARIC 1/2$",col:"#6ee7b7"},
+    {f:"OTONEURO",col:"#c4b5fd"},
+    {f:"HM/HM/CIND",col:"#fca5a5"},{f:"HM/PO",col:"#fb923c"},{f:"OFF/HM/CIND",col:"#fdba74"},
+    {f:"MUTIRÃO",col:"#fb923c"},{f:"UND. EXT.",col:"#e9d5ff"},
+    {f:"ANDY",col:"#c4b5fd"},{f:"ANDY/CC",col:"#fbbf24"},
+    {f:"CC1",col:"#fdba74"},{f:"CC3",col:"#fdba74"},{f:"CC5",col:"#fdba74"},
+  ];
+
+  let rangeHtml=`<div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;flex-shrink:0">
+    <div style="font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:12px">📈 Range por Função — 4 meses <span style="font-size:.65rem;color:var(--text3);font-weight:400;margin-left:6px">0 = equilíbrio perfeito</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 24px">`;
+
+  KEY_FUNCS.forEach(({f,col})=>{
+    const s=fs(f);
+    const vals=ALL.map(m=>gc[m][f]||0);
+    const rng=Math.max(...vals)-Math.min(...vals);
+    const mx=Math.max(...vals)||1;
+    const pct=(rng/mx)*100;
+    const clr=rng===0?"#4ade80":rng<=2?"#fbbf24":rng<=3?"#fb923c":"#f87171";
+    rangeHtml+=`<div style="display:flex;align-items:center;gap:8px;padding:3px 0">
+      <span style="font-size:.64rem;color:${s.t||col};min-width:80px;white-space:nowrap">${s.label||f}</span>
+      <div style="flex:1;height:6px;background:var(--bg4);border-radius:3px">
+        <div style="height:100%;width:${Math.max(pct,4)}%;background:${clr};border-radius:3px"></div>
+      </div>
+      <span style="font-size:.64rem;font-weight:700;color:${clr};min-width:16px;text-align:right;font-family:var(--mono)">${rng}</span>
+    </div>`;
+  });
+  rangeHtml+=`</div></div>`;
+
+  // ── NOTE ────────────────────────────────────────────────────────────────
+  const noteHtml=`<div style="background:var(--bg3);border-radius:10px;padding:12px 14px;font-size:.65rem;color:var(--text2);line-height:1.7;flex-shrink:0">
+    <div style="font-weight:700;color:var(--text);margin-bottom:4px">⚖️ Critérios de Otimização</div>
+    OTONEURO · ARIC$ · ARIC½$ · MUTIRÃO · UND.EXT → Range = 0 ✅<br>
+    OFF1/COB1 e OFF2/COB2 compensam-se mutuamente entre meses<br>
+    Shifts [0,3,5,6] ↔ [1,2,4,7] garantem equilíbrio trimestral · Desvio padrão mínimo
+  </div>`;
+
+  el.innerHTML=tblHtml+rangeHtml+noteHtml;
+}
+
+
+function renderRealoc(){
+  var el=document.getElementById('panel-realoc');
+  if(!el)return;
+  el.innerHTML='';
+  var dO='';
+  ALL.forEach(function(m){dO+='<option value="'+m+'">'+m+'</option>';});
+  var card=document.createElement('div');
+  card.className='pcard';card.style.padding='14px';card.style.marginBottom='12px';
+  card.innerHTML='<div class="pname" style="margin-bottom:10px">Marcar Realocacao</div>'
+    +'<div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">'
+    +'<div style="flex:1;min-width:130px"><div class="plbl" style="margin-bottom:3px">Medico</div>'
+    +'<select id="rl-doc" style="width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;padding:6px 8px;color:var(--text);font-size:.76rem;font-family:inherit">'+dO+'</select></div>'
+    +'<div style="flex:.8;min-width:110px"><div class="plbl" style="margin-bottom:3px">Data (DD/MM)</div>'
+    +'<input type="text" id="rl-date" placeholder="15/06" maxlength="5" style="width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;padding:6px 9px;color:var(--text);font-size:.82rem;font-family:inherit;letter-spacing:1px">'
+    +'<div id="rl-hint" style="font-size:.6rem;color:var(--text3);margin-top:2px;min-height:13px"></div></div>'
+    +'<div style="flex:1;min-width:120px"><div class="plbl" style="margin-bottom:3px">Funcao no dia</div>'
+    +'<div id="rl-func" style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:6px 9px;font-size:.76rem;color:var(--text3)">-</div></div>'
+    +'<div style="flex:2;min-width:180px"><div class="plbl" style="margin-bottom:3px">Observacao</div>'
+    +'<input type="text" id="rl-obs" placeholder="Ex: Cobrindo cirurgia urgente..." style="width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;padding:6px 9px;color:var(--text);font-size:.76rem;font-family:inherit"></div>'
+    +'<div style="padding-top:18px"><button id="rl-btn" style="background:var(--accent);color:#fff;border:none;border-radius:7px;padding:7px 14px;font-weight:700;font-size:.78rem;cursor:pointer;font-family:inherit">Marcar</button></div>'
+    +'</div><div id="rl-msg" style="font-size:.68rem;color:#4ade80;margin-top:8px;min-height:14px"></div>';
+  el.appendChild(card);
+  var allR=[];
+  ['Junho','Julho','Agosto','Setembro'].forEach(function(mes){
+    if(!realocs[mes])return;
+    Object.keys(realocs[mes]).forEach(function(wk){
+      Object.keys(realocs[mes][wk]).forEach(function(dia){
+        Object.keys(realocs[mes][wk][dia]).forEach(function(m){
+          var obs=realocs[mes][wk][dia][m];
+          var dt=(DT[mes]&&DT[mes][wk]&&DT[mes][wk][dia])||'';
+          var row=(S[mes]||[]).find(function(r){return r.week===parseInt(wk)&&r.day===dia;});
+          var f=row?row[m]:'';var s=fs(f);
+          allR.push({mes:mes,wk:parseInt(wk),dia:dia,m:m,obs:obs,dt:dt,f:f,s:s});
+        });
+      });
+    });
+  });
+  var listDiv=document.createElement('div');
+  var lh='<div style="background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden">'
+    +'<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border)">'
+    +'<div style="font-size:.8rem;font-weight:700;color:var(--text)">Realocacoes ('+allR.length+')</div>'
+    +(allR.length>0?'<button onclick="resetRealocs()" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);color:#f87171;border-radius:5px;padding:2px 9px;font-size:.66rem;font-weight:700;cursor:pointer;font-family:inherit">Resetar</button>':'')
+    +'</div>';
+  if(allR.length===0){
+    lh+='<div style="padding:28px;text-align:center;color:var(--text3);font-size:.78rem">Nenhuma realocacao registrada.</div>';
+  }else{
+    lh+='<table style="width:100%;border-collapse:collapse;font-size:.7rem"><thead><tr>'
+      +['Medico','Data','Dia','Funcao','Observacao','Acao'].map(function(h){return '<th style="background:var(--bg2);color:var(--text3);font-size:.6rem;padding:7px 10px;text-align:left;border-bottom:1px solid var(--border)">'+h+'</th>';}).join('')
+      +'</tr></thead><tbody>';
+    allR.forEach(function(r,ri){
+      lh+='<tr>'
+        +'<td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:700;color:var(--text)">'+r.m+'</td>'
+        +'<td style="padding:6px 10px;border-bottom:1px solid var(--border);font-family:var(--mono);font-weight:600;color:var(--text2)">'+r.dt+'</td>'
+        +'<td style="padding:6px 10px;border-bottom:1px solid var(--border);color:var(--text3)">'+r.dia+'</td>'
+        +'<td style="padding:6px 10px;border-bottom:1px solid var(--border)"><span style="background:'+r.s.bg+';color:'+r.s.t+';border-radius:4px;padding:2px 7px;font-size:.64rem;font-weight:700">'+(r.s.label||r.f)+'</span></td>'
+        +'<td style="padding:6px 10px;border-bottom:1px solid var(--border);color:var(--text2)">'+r.obs+'</td>'
+        +'<td style="padding:6px 10px;border-bottom:1px solid var(--border)"><button data-ri="'+ri+'" onclick="rlDel(+this.dataset.ri)" style="background:none;border:1px solid var(--border2);border-radius:4px;padding:2px 7px;font-size:.6rem;color:var(--text3);cursor:pointer;font-family:inherit">Remover</button></td>'
+        +'</tr>';
+    });
+    lh+='</tbody></table>';
+  }
+  lh+='</div>';
+  listDiv.innerHTML=lh;
+  el.appendChild(listDiv);
+  window._rlAllR=allR;
+  var ds=document.getElementById('rl-doc');var de=document.getElementById('rl-date');var bn=document.getElementById('rl-btn');
+  if(ds)ds.onchange=onRlChange;if(de)de.oninput=function(){onRlDI(this);};if(bn)bn.onclick=submitRealoc;
+}
+function rlDel(i){var r=window._rlAllR[i];if(r)removeRealoc(r.mes,r.wk,r.dia,r.m);}
+function onRlDI(el){
+  var v=el.value.replace(/[^0-9/]/g,'');if(v.length===2&&v.indexOf('/')<0)v+='/';el.value=v;
+  var h=document.getElementById('rl-hint');
+  if(h){if(v.length===5){var i=DL[v];if(i){h.style.color='#4ade80';h.textContent=i.dia+', Sem '+i.wk+' '+i.mes;}else{h.style.color='#f87171';h.textContent='Nao encontrada';}}else h.textContent='';}
+  onRlChange();
+}
+function onRlChange(){
+  var doc=document.getElementById('rl-doc')?document.getElementById('rl-doc').value:'';
+  var dv=document.getElementById('rl-date')?document.getElementById('rl-date').value:'';
+  var fe=document.getElementById('rl-func');if(!fe)return;
+  if(!dv||dv.length<5){fe.innerHTML='-';return;}
+  var info=DL[dv];if(!info){fe.innerHTML='<span style="color:#f87171">Data invalida</span>';return;}
+  var row=(S[info.mes]||[]).find(function(r){return r.week===info.wk&&r.day===info.dia;});
+  if(!row){fe.innerHTML='-';return;}
+  var f=row[doc]||'';if(!f){fe.innerHTML='<span style="color:#6b7280">De ferias</span>';return;}
+  var s=fs(f);fe.innerHTML='<span style="background:'+s.bg+';color:'+s.t+';border-radius:5px;padding:3px 8px;font-size:.76rem;font-weight:700">'+(s.label||f)+'</span>';
+}
+function submitRealoc(){
+  var doc=document.getElementById('rl-doc').value;var dv=document.getElementById('rl-date').value;
+  var obs=document.getElementById('rl-obs').value.trim();var msg=document.getElementById('rl-msg');
+  if(!dv||dv.length<5){if(msg){msg.style.color='#f87171';msg.textContent='Informe a data';}return;}
+  var info=DL[dv];if(!info){if(msg){msg.style.color='#f87171';msg.textContent='Data nao encontrada';}return;}
+  if(!obs){if(msg){msg.style.color='#f87171';msg.textContent='Informe a observacao';}return;}
+  setRealoc(info.mes,info.wk,info.dia,doc,obs);
+  if(msg){msg.style.color='#4ade80';msg.textContent='Registrado: '+doc+' em '+dv;}
+  if(['Junho','Julho','Agosto','Setembro'].indexOf(cur)>=0&&cur===info.mes){renderLeft();renderRight();}
+  renderRealoc();
+}
+function removeRealoc(mes,wk,dia,m){
+  setRealoc(mes,wk,dia,m,null);
+  if(['Junho','Julho','Agosto','Setembro'].indexOf(cur)>=0&&cur===mes){renderLeft();renderRight();}
+  renderRealoc();
+}
+function resetRealocs(){
+  ['Junho','Julho','Agosto','Setembro'].forEach(function(m){delete realocs[m];});
+  if(['Junho','Julho','Agosto','Setembro'].indexOf(cur)>=0){renderLeft();renderRight();}
+  renderRealoc();
+}
+document.addEventListener("DOMContentLoaded",()=>{renderLeft();renderRight();});
+</script>
+</body>
+</html>
